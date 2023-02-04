@@ -61,4 +61,8 @@ public class WordSplit {
     public int getHeight() {
         return height;
     }
+
+    public String getText() {
+        return text;
+    }
 }

@@ -105,13 +105,13 @@ public class UIText {
         this.fontColor = fontColor;
     }
 
-    public int splitWord(int index, int containerXPos) {
+    public Vector2D splitWord(int index, int startPosX, int lastPosY) {
+        Vector2D positionOfWordOnNextRow = new Vector2D(startPosX, lastPosY + getHeight() + 10);
         wordSplits.clear();
-        //System.out.println(text + " " + index + " " + text.substring(0, index) + " " + text.substring(index));
         wordSplits.add(new WordSplit(text.substring(0, index), position, this));
-        wordSplits.add(new WordSplit(text.substring(index), new Vector2D(containerXPos + 20,
-                position.getY() + 15), this));
-        return wordSplits.peek().getWidth();
+        wordSplits.add(new WordSplit(text.substring(index), positionOfWordOnNextRow, this));
+        return new Vector2D(positionOfWordOnNextRow.intX() + wordSplits.peek().getWidth(),
+                positionOfWordOnNextRow.intY());
     }
 
     private void createFont() {
@@ -129,6 +129,10 @@ public class UIText {
 
     public int getWidthOfFirstSplit() {
         return wordSplits.firstElement().getWidth();
+    }
+
+    public int getLengthOfLastSplit(){
+        return wordSplits.lastElement().getText().length();
     }
 
     public int getHeight() {

@@ -26,7 +26,7 @@ public class UITextContainer {
 
     private int currentLineLength;
 
-    private final int maxLineLength = 60;
+    private final int maxLineLength = 55;
 
     private int nextWordXPos;
 
@@ -41,8 +41,8 @@ public class UITextContainer {
         this.position = new Vector2D(posX,posY);
         this.size = new Vector2D(sizeX,sizeY);
         this.currentLineLength = 0;
-        this.nextWordXPos = 0;
-        this.nextWordYPos = 0;
+        this.nextWordXPos = position.intX() + padding;
+        this.nextWordYPos = position.intY() + padding;
         this.padding = padding;
         this.vertical = vertical;
         this.currentSelection = 0;
@@ -52,18 +52,21 @@ public class UITextContainer {
     public void addTexts(List<UIText> texts){
         if(!vertical) {
             for (UIText t : texts) {
-                t.setPosition(position.intX() + nextWordXPos + padding, position.intY() + nextWordYPos + padding);
 
-                if (currentLineLength == maxLineLength) {
+                if(currentLineLength + t.getText().length() > maxLineLength){
+                    t.setPosition(nextWordXPos, nextWordYPos);
+                    Vector2D newPos = t.splitWord(currentLineLength + t.getText().length() - maxLineLength,
+                            position.intX() + padding, nextWordYPos);
+                    nextWordXPos = newPos.intX();
+                    nextWordYPos = newPos.intY();
+                    currentLineLength = t.getLengthOfLastSplit();
+                }else if(currentLineLength + t.getText().length() == maxLineLength) {
+                    t.setPosition(nextWordXPos, nextWordYPos);
+                    nextWordXPos = position.intX() + padding;
+                    nextWordYPos += t.getHeight() + 10;
                     currentLineLength = 0;
-                    nextWordXPos = position.intX() + 20;
-                    nextWordYPos += t.getHeight() + 10;
-                }else if (currentLineLength + t.getText().length() > maxLineLength) {
-                    int newLineWidth = t.splitWord(currentLineLength + t.getText().length() - maxLineLength, position.intX());
-                    currentLineLength = currentLineLength + t.getText().length() - maxLineLength;
-                    nextWordXPos = position.intX() + 20 + newLineWidth;
-                    nextWordYPos += t.getHeight() + 10;
-                } else {
+                }else{
+                    t.setPosition(nextWordXPos, nextWordYPos);
                     nextWordXPos += t.getWidthOfFirstSplit();
                     currentLineLength += t.getText().length();
                 }
