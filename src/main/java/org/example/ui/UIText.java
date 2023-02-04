@@ -26,7 +26,15 @@ public class UIText {
     private final String fontFamily;
     private Color fontColor;
 
+    private Color backgroundColor;
+
+    private boolean opacityGoDown;
+
     private Font font;
+
+    private int timer;
+
+    private boolean blink;
 
     public Vector2D getPosition() {
         return position;
@@ -63,15 +71,34 @@ public class UIText {
         this.fontStyle = Font.BOLD;
         this.fontFamily = fontFamily;
         this.fontColor = Color.decode("#78C475");
+        this.backgroundColor = new Color(255, 255, 255, 0);
+        this.opacityGoDown = true;
         this.wordType = wordType;
         createFont();
 
         this.position = new Vector2D(0, 0);
         this.wordSplits = new Stack<>();
-        wordSplits.add(new WordSplit(this, text, font, fontColor, position));
+        wordSplits.add(new WordSplit(text, position, this));
+
+        this.timer = 0;
+        this.blink = true;
     }
 
     public void update() {
+        timer++;
+
+        if(timer > 35){
+            timer = 0;
+            blink = !blink;
+        }
+
+        if(selected && blink) {
+            fontColor = Color.decode("#000000");
+            backgroundColor = Color.decode("#54DB4F");
+        } else {
+            fontColor = Color.decode("#78C475");
+            backgroundColor = new Color(255, 255, 255, 0);
+        }
     }
 
     public void setFontColor(Color fontColor) {
@@ -80,10 +107,9 @@ public class UIText {
 
     public int splitWord(int index, int containerXPos) {
         wordSplits.clear();
-        wordSplits.add(new WordSplit(this, text.substring(0, Math.min(text.length(), index)), font, fontColor,
-                position));
-        wordSplits.add(new WordSplit(this, text.substring(index), font, fontColor,
-                new Vector2D(containerXPos + 20, position.getY() + 15)));
+        wordSplits.add(new WordSplit(text.substring(0, Math.min(text.length(), index)), position, this));
+        wordSplits.add(new WordSplit(text.substring(index), new Vector2D(containerXPos + 20,
+                position.getY() + 15), this));
         return wordSplits.peek().getWidth();
     }
 
@@ -106,5 +132,21 @@ public class UIText {
 
     public int getHeight() {
         return wordSplits.firstElement().getHeight();
+    }
+
+    public void setSelected(boolean selected) {
+        this.selected = selected;
+        if(selected){
+            blink = true;
+        }
+        timer = 0;
+    }
+
+    public Color getBackgroundColor() {
+        return backgroundColor;
+    }
+
+    public Color getFontColor() {
+        return fontColor;
     }
 }

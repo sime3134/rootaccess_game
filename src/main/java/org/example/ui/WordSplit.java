@@ -8,8 +8,6 @@ import java.awt.image.BufferedImage;
 
 public class WordSplit {
 
-    private UIText uiText;
-
     private String text;
 
     private int width;
@@ -17,23 +15,19 @@ public class WordSplit {
 
     private Vector2D position;
 
-    private Font font;
+    private UIText uiText;
 
-    private Color fontColor;
-
-    public WordSplit(UIText uiText, String text, Font font, Color fontColor, Vector2D position) {
-        this.uiText = uiText;
+    public WordSplit(String text, Vector2D position, UIText uiText) {
         this.text = text;
-        this.font = font;
-        this.fontColor = fontColor;
         this.position = position;
+        this.uiText = uiText;
         calculateSize();
     }
 
     private void calculateSize() {
         BufferedImage image = new BufferedImage(1, 1, BufferedImage.TYPE_INT_ARGB);
         Graphics2D g2d = image.createGraphics();
-        FontMetrics fm = g2d.getFontMetrics(font);
+        FontMetrics fm = g2d.getFontMetrics(uiText.getFont());
         width = fm.stringWidth(text);
         height = fm.getHeight();
         g2d.dispose();
@@ -43,10 +37,13 @@ public class WordSplit {
         BufferedImage image = (BufferedImage) ImgUtils.createCompatibleImage(width, height,
                 ImgUtils.ALPHA_BIT_MASKED);
         Graphics2D graphics = image.createGraphics();
-        graphics.setFont(font);
+        graphics.setFont(uiText.getFont());
 
-        graphics.setColor(fontColor);
-        graphics.drawString(text, 0, font.getSize());
+        graphics.setColor(uiText.getBackgroundColor());
+        graphics.fillRect(0, 0, width, height);
+
+        graphics.setColor(uiText.getFontColor());
+        graphics.drawString(text, 0, uiText.getFont().getSize());
 
         graphics.dispose();
         return image;

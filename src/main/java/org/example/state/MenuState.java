@@ -2,6 +2,7 @@ package org.example.state;
 
 import org.example.base.ContentManager;
 import org.example.keyboard.GameController;
+import org.example.ui.UITextContainer;
 
 import java.awt.*;
 
@@ -12,10 +13,13 @@ public class MenuState extends State {
 
     @Override
     public void update() {
+        for (UITextContainer container : textContainers) {
+            container.update();
+        }
         handleInput();
     }
 
-    private void handleInput() {
+    protected void handleInput() {
         if(controller.requestedUp()) {
             System.out.println("up");
         }
@@ -35,6 +39,8 @@ public class MenuState extends State {
 
     @Override
     public void draw(Graphics g) {
-
+        for (UITextContainer container : textContainers) {
+            container.draw(g);
+        }
     }
 }

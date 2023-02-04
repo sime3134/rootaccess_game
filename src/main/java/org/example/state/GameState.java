@@ -19,9 +19,17 @@ public class GameState extends State {
         test();
     }
 
+    @Override
+    public void update() {
+        for (UITextContainer container : textContainers) {
+            container.update();
+        }
+        handleInput();
+    }
+
     public void test(){
-        pcContainer = new UITextContainer(520, 60, 660, 545, 20, false);
-        infoContainer = new UITextContainer(130, 180, 270, 310, 20, true);
+        pcContainer = new UITextContainer(520, 60, 660, 545, 20, false, true);
+        infoContainer = new UITextContainer(130, 180, 270, 310, 20, true, false);
 
         UIText text1 = new UIText("helicopter", 12, "Joystix Monospace", WordType.SELECTABLE);
         UIText text2 = new UIText("?¤22)&=#)%=¤", 12, "Joystix Monospace", WordType.FILLER);
@@ -37,22 +45,20 @@ public class GameState extends State {
         UIText text10 = new UIText("- Computers", 36, "January Shine", WordType.NONE);
         UIText text11 = new UIText("- Cars", 36, "January Shine", WordType.NONE);
         infoContainer.addTexts(text8, text9, text10, text11);
+
+        textContainers.add(pcContainer);
+        textContainers.add(infoContainer);
     }
 
-    @Override
-    public void update() {
-        handleInput();
-    }
-
-    private void handleInput() {
+    protected void handleInput() {
         if(controller.requestedLeft()) {
-
+            pcContainer.moveLeft();
         }
         if(controller.requestedRight()) {
-            System.out.println("right");
+            pcContainer.moveRight();
         }
         if(controller.requestedConfirm()) {
-            System.out.println("confirm");
+            //TODO: check if word is correct
         }
     }
 
@@ -60,7 +66,8 @@ public class GameState extends State {
     public void draw(Graphics g) {
         g.drawImage(content.getImage("bg-" + Settings.getScreenHeight()), 0, 0, null);
         g.drawImage(content.getImage("portrait-" + Settings.getScreenHeight()), 82, 55, null);
-        pcContainer.draw(g);
-        infoContainer.draw(g);
+        for (UITextContainer container : textContainers) {
+            container.draw(g);
+        }
     }
 }

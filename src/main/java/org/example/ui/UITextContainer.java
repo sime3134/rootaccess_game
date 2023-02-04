@@ -10,6 +10,9 @@ import java.util.List;
 public class UITextContainer {
     private List<UIText> textComponents;
 
+    private int currentSelection;
+    private int lastSelection;
+
     private Vector2D position;
 
     private Vector2D size;
@@ -31,7 +34,9 @@ public class UITextContainer {
 
     private final boolean vertical;
 
-    public UITextContainer(int posX, int posY, int sizeX, int sizeY, int padding, boolean vertical){
+    private boolean selectable;
+
+    public UITextContainer(int posX, int posY, int sizeX, int sizeY, int padding, boolean vertical, boolean selectable){
         textComponents = new ArrayList<>();
         this.position = new Vector2D(posX,posY);
         this.size = new Vector2D(sizeX,sizeY);
@@ -40,6 +45,8 @@ public class UITextContainer {
         this.nextWordYPos = 0;
         this.padding = padding;
         this.vertical = vertical;
+        this.currentSelection = 0;
+        this.selectable = selectable;
     }
 
     public void addTexts(UIText... text){
@@ -68,6 +75,16 @@ public class UITextContainer {
                 textComponents.add(t);
             }
         }
+
+        if(selectable) {
+            textComponents.get(0).setSelected(true);
+        }
+    }
+
+    public void update(){
+        for (UIText text : textComponents) {
+            text.update();
+        }
     }
 
     public Image getSprite() {
@@ -95,6 +112,23 @@ public class UITextContainer {
 
         for (UIText text : textComponents) {
             text.draw(g);
+        }
+    }
+
+    public void moveLeft() {
+        if(currentSelection > 0) {
+            textComponents.get(currentSelection).setSelected(false);
+            currentSelection--;
+            textComponents.get(currentSelection).setSelected(true);
+
+        }
+    }
+
+    public void moveRight() {
+        if(currentSelection < textComponents.size() - 1) {
+            textComponents.get(currentSelection).setSelected(false);
+            currentSelection++;
+            textComponents.get(currentSelection).setSelected(true);
         }
     }
 }
