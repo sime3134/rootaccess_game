@@ -18,7 +18,6 @@ public class Game {
 
     private final GameFrame gameFrame;
     private final ContentManager content;
-    private final TextGenerator textGen;
 
     private State currentState;
 
@@ -30,9 +29,6 @@ public class Game {
         content.loadContent();
         controller = new GameController();
         currentState = new GameState(controller, content);
-
-        textGen = new TextGenerator(content.getInterests(), content.getOccupations());
-        textGen.createText(0.5f, 100);
     }
 
     public void update(){

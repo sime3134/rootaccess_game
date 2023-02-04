@@ -49,9 +49,9 @@ public class UITextContainer {
         this.selectable = selectable;
     }
 
-    public void addTexts(UIText... text){
+    public void addTexts(List<UIText> texts){
         if(!vertical) {
-            for (UIText t : text) {
+            for (UIText t : texts) {
                 t.setPosition(position.intX() + nextWordXPos + padding, position.intY() + nextWordYPos + padding);
 
                 if (currentLineLength + t.getText().length() > maxLineLength) {
@@ -67,7 +67,7 @@ public class UITextContainer {
                 textComponents.add(t);
             }
         } else {
-            for (UIText t : text) {
+            for (UIText t : texts) {
                 t.setPosition(position.intX() + nextWordXPos + padding, position.intY() + nextWordYPos + padding);
 
                 nextWordYPos += t.getHeight() + 10;

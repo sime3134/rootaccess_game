@@ -114,9 +114,9 @@ public class TextGenerator {
         Random rand = new Random();
         int len = 3;
         char[] fillerChars = {'!', '@', '#', '$', '%', '^', '&', '*', '(', ')',
-                                '_', '+', '{', '}', '\"', '|', '?', '<', '>', '[',
-                                ']', '\\', '.', '~', '1', '2', '3', '4', '5', '6',
-                                '7', '8', '9', '0', '\''};
+                                '_', '+', '{', '}', 34, '|', '?', '<', '>', '[',
+                                ']', 97, '.', '~', '1', '2', '3', '4', '5', '6',
+                                '7', '8', '9', '0', 47};
         StringBuilder sb = new StringBuilder();
         for (int i = 0; i < len; i++) {
             int charIndex = rand.nextInt(fillerChars.length);
