@@ -155,4 +155,42 @@ public class UITextContainer {
             textComponents.get(currentSelection).setSelected(true);
         }
     }
+
+    // UGLY CODE, DELETE
+    public void moveVertical(int moveStep) {
+        int idx = currentSelection + moveStep;
+        if (idx < 0) {idx = textComponents.size()-1;}
+        int currentDistance = Integer.MAX_VALUE;
+        UIText current = textComponents.get(currentSelection);
+        System.out.println(idx);
+        while (true) {
+            UIText bestMatch = textComponents.get(idx);
+            idx = (idx + moveStep) % textComponents.size();
+            if (idx < 0) {idx = textComponents.size()-1;}
+            if (current.getY() == bestMatch.getY()) {continue;}
+            if (Math.abs(current.getX()-bestMatch.getX()) < Math.abs(currentDistance)) {
+                currentDistance = current.getX()-bestMatch.getX();
+            } else {
+                idx = idx-moveStep;
+                if (textComponents.get(idx).getWordType().equals(WordType.FILLER)) {
+                    int val1 = textComponents.get(idx-1).getX() - textComponents.get(currentSelection).getX();
+                    int val2 = textComponents.get(idx+1).getX() - textComponents.get(currentSelection).getX();
+                    idx = Math.abs(val1) < Math.abs(val2) ? idx-1 : idx + 1;
+                }
+                textComponents.get(currentSelection).setSelected(false);
+                textComponents.get(idx).setSelected(true);
+                currentSelection = idx;
+                break;
+            }
+        }
+
+    }
+
+    public void moveUp() {
+        moveVertical(-1);
+    }
+
+    public void moveDown() {
+        moveVertical(1);
+    }
 }

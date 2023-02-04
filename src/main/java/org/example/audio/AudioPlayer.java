@@ -70,9 +70,7 @@ public class AudioPlayer {
     }
 
     private Clip getClip(String fileName, long startMicro) {
-        System.out.println(fileName);
         final URL soundFile = AudioPlayer.class.getResource("/audio/" + fileName);
-        System.out.println(soundFile.getPath());
         try(AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(soundFile)) {
             final Clip clip = AudioSystem.getClip();
             clip.open(audioInputStream);

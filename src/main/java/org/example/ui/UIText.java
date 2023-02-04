@@ -39,6 +39,9 @@ public class UIText {
         this.position.setY(y);
     }
 
+    public int getX() {return position.intX();}
+    public int getY() {return position.intY();}
+
     public WordType getWordType() {
         return wordType;
     }

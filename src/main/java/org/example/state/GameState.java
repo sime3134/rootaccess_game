@@ -21,6 +21,7 @@ public class GameState extends State {
         super(controller, content, audioPlayer);
         textGen = new TextGenerator(content.getInterests(), content.getOccupations());
         textGen.createText(0.5f, 1100);
+        audioPlayer.playMusic("music_stem_one.wav", 0);
         test();
     }
 
@@ -56,6 +57,14 @@ public class GameState extends State {
         }
         if(controller.requestedRight()) {
             pcContainer.moveRight();
+            audioPlayer.playKeySound();
+        }
+        if(controller.requestedUp()) {
+            pcContainer.moveUp();
+            audioPlayer.playKeySound();
+        }
+        if(controller.requestedDown()) {
+            pcContainer.moveDown();
             audioPlayer.playKeySound();
         }
         if(controller.requestedConfirm()) {
