@@ -2,6 +2,7 @@ package org.example.base;
 
 import org.example.ui.UIText;
 import org.example.ui.UITextContainer;
+import org.example.wordgen.TextGenerator;
 
 import java.awt.*;
 /**
@@ -12,14 +13,16 @@ public class Game {
 
     private final GameFrame gameFrame;
     private final ContentManager content;
-
     private UITextContainer pcContainer;
     private UITextContainer infoContainer;
+    private final TextGenerator textGen;
 
     public Game(){
         gameFrame = new GameFrame(this);
         content = new ContentManager();
+        textGen = new TextGenerator();
         content.loadContent();
+        textGen.createText(content.getIntestests());
         test();
     }
 
