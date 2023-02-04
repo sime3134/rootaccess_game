@@ -1,0 +1,40 @@
+package org.example.state;
+
+import org.example.base.ContentManager;
+import org.example.keyboard.GameController;
+
+import java.awt.*;
+
+public class MenuState extends State {
+    public MenuState(GameController controller, ContentManager content) {
+        super(controller, content);
+    }
+
+    @Override
+    public void update() {
+        handleInput();
+    }
+
+    private void handleInput() {
+        if(controller.requestedUp()) {
+            System.out.println("up");
+        }
+        if(controller.requestedDown()) {
+            System.out.println("down");
+        }
+        if(controller.requestedLeft()) {
+            System.out.println("left");
+        }
+        if(controller.requestedRight()) {
+            System.out.println("right");
+        }
+        if(controller.requestedConfirm()) {
+            System.out.println("confirm");
+        }
+    }
+
+    @Override
+    public void draw(Graphics g) {
+
+    }
+}

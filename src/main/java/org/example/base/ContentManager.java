@@ -83,7 +83,7 @@ public class ContentManager {
             Image originalImage = ImgUtils.loadImage(filePath + "/" + fileName);
             String fileNameWithoutExt = fileName.substring(0, fileName.length() - 4);
             images.put(fileNameWithoutExt + "-1080", originalImage);
-            images.put(fileNameWithoutExt + "-720", ImgUtils.scaleDownImage(originalImage, 1280, 720));
+            images.put(fileNameWithoutExt + "-720", ImgUtils.scaleDownImage(originalImage, 1.5f));
         }
     }
 

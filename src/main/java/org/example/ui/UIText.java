@@ -1,6 +1,7 @@
 package org.example.ui;
 
 import org.example.base.Vector2D;
+import org.example.enums.WordType;
 
 import java.awt.*;
 import java.util.Stack;
@@ -13,6 +14,8 @@ public class UIText {
     private String text;
 
     private Stack<WordSplit> wordSplits;
+
+    private WordType wordType;
 
     private Vector2D position;
 
@@ -50,12 +53,13 @@ public class UIText {
         return text;
     }
 
-    public UIText(String text, int fontSize, String fontFamily) {
+    public UIText(String text, int fontSize, String fontFamily, WordType wordType) {
         this.text = text;
         this.fontSize = fontSize;
         this.fontStyle = Font.BOLD;
         this.fontFamily = fontFamily;
         this.fontColor = Color.decode("#78C475");
+        this.wordType = wordType;
         createFont();
 
         this.position = new Vector2D(0, 0);
@@ -75,7 +79,7 @@ public class UIText {
         wordSplits.add(new WordSplit(this, text.substring(0, Math.min(text.length(), index)), font, fontColor,
                 position));
         wordSplits.add(new WordSplit(this, text.substring(index), font, fontColor,
-                new Vector2D(containerXPos + 20, position.getY() + 10)));
+                new Vector2D(containerXPos + 20, position.getY() + 15)));
         return wordSplits.peek().getWidth();
     }
 
@@ -85,7 +89,6 @@ public class UIText {
 
     public void draw(Graphics g) {
         for(WordSplit wordSplit : wordSplits) {
-            System.out.println(wordSplit.getPosition().intX() + " " + wordSplit.getPosition().intY());
             g.drawImage(wordSplit.getSprite(),
                     wordSplit.getPosition().intX(),
                     wordSplit.getPosition().intY(),

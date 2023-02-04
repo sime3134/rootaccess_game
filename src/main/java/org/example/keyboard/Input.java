@@ -1,4 +1,4 @@
-package org.example.base;
+package org.example.keyboard;
 
 import java.awt.event.*;
 import java.util.ArrayList;

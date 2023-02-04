@@ -1,5 +1,7 @@
 package org.example.base;
 
+import org.example.keyboard.Input;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ComponentAdapter;

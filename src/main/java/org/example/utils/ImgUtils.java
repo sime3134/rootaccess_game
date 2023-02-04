@@ -100,7 +100,11 @@ public class ImgUtils {
         return ret;
     }
 
-    public static Image scaleDownImage(Image temp, int width, int height) {
-        return temp.getScaledInstance(width, height, Image.SCALE_SMOOTH);
+    public static Image scaleDownImage(Image temp, float scale) {
+        int width = temp.getWidth(null);
+        int height = temp.getHeight(null);
+        int newWidth = (int) (width / scale);
+        int newHeight = (int) (height / scale);
+        return temp.getScaledInstance(newWidth, newHeight, Image.SCALE_SMOOTH);
     }
 }

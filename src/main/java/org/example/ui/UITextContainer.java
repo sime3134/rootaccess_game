@@ -23,13 +23,13 @@ public class UITextContainer {
 
     private int currentLineLength;
 
-    private final int maxLineLength = 30;
+    private final int maxLineLength = 60;
 
     private int nextWordXPos;
 
     private int nextWordYPos;
 
-    private boolean vertical;
+    private final boolean vertical;
 
     public UITextContainer(int posX, int posY, int sizeX, int sizeY, int padding, boolean vertical){
         textComponents = new ArrayList<>();
