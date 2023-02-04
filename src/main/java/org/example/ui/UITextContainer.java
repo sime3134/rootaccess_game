@@ -54,7 +54,11 @@ public class UITextContainer {
             for (UIText t : texts) {
                 t.setPosition(position.intX() + nextWordXPos + padding, position.intY() + nextWordYPos + padding);
 
-                if (currentLineLength + t.getText().length() > maxLineLength) {
+                if (currentLineLength == maxLineLength) {
+                    currentLineLength = 0;
+                    nextWordXPos = position.intX() + 20;
+                    nextWordYPos += t.getHeight() + 10;
+                }else if (currentLineLength + t.getText().length() > maxLineLength) {
                     int newLineWidth = t.splitWord(currentLineLength + t.getText().length() - maxLineLength, position.intX());
                     currentLineLength = currentLineLength + t.getText().length() - maxLineLength;
                     nextWordXPos = position.intX() + 20 + newLineWidth;

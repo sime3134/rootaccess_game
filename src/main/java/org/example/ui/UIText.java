@@ -107,7 +107,8 @@ public class UIText {
 
     public int splitWord(int index, int containerXPos) {
         wordSplits.clear();
-        wordSplits.add(new WordSplit(text.substring(0, Math.min(text.length(), index)), position, this));
+        //System.out.println(text + " " + index + " " + text.substring(0, index) + " " + text.substring(index));
+        wordSplits.add(new WordSplit(text.substring(0, index), position, this));
         wordSplits.add(new WordSplit(text.substring(index), new Vector2D(containerXPos + 20,
                 position.getY() + 15), this));
         return wordSplits.peek().getWidth();

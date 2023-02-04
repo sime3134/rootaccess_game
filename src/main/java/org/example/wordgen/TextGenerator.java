@@ -65,7 +65,7 @@ public class TextGenerator {
         // Then for the occupation category
         for (String categoryName : occupations.keySet()) {
             ArrayList<String> wrongOrCorrectWordList = possibleWrongWords;
-            if (categoryName == occupationText.getText()) {wrongOrCorrectWordList = possibleCorrectWords;}
+            if (categoryName.equals(occupationText.getText())) {wrongOrCorrectWordList = possibleCorrectWords;}
             for (String word : occupations.get(categoryName)) {
                 wrongOrCorrectWordList.add(word);
             }

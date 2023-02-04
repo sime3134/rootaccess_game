@@ -30,7 +30,6 @@ public class WordSplit {
         FontMetrics fm = g2d.getFontMetrics(uiText.getFont());
         width = fm.stringWidth(text);
         height = fm.getHeight();
-        System.out.println(text + " " + "Width: " + width + " Height: " + height);
 
         g2d.dispose();
     }
