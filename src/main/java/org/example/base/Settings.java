@@ -1,4 +1,4 @@
-package org.example;
+package org.example.base;
 
 /**
  * @author Simon Jern
@@ -8,8 +8,8 @@ public abstract class Settings {
 
     private Settings() {}
 
-    private static int SCREEN_WIDTH = 1100;
-    private static int SCREEN_HEIGHT = 700;
+    private static int SCREEN_WIDTH = 1280;
+    private static int SCREEN_HEIGHT = 720;
 
     public static void setScreenSize(int width, int height) {
         SCREEN_WIDTH = width;

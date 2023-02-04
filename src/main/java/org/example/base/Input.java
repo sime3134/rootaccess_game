@@ -1,4 +1,4 @@
-package org.example;
+package org.example.base;
 
 import java.awt.event.*;
 import java.util.ArrayList;
