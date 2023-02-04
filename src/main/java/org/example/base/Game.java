@@ -27,11 +27,12 @@ public class Game {
     public Game(){
         gameFrame = new GameFrame(this);
         content = new ContentManager();
-        textGen = new TextGenerator();
         content.loadContent();
-        textGen.createText(content.getIntestests());
         controller = new GameController();
         currentState = new GameState(controller, content);
+
+        textGen = new TextGenerator(content.getInterests(), content.getOccupations());
+        textGen.createText(0.5f, 100);
     }
 
     public void update(){

@@ -19,7 +19,7 @@ import java.util.Map;
  */
 public class ContentManager {
     private final Map<String, Image> images;
-    private final Map<String, ArrayList<String>> intestests;
+    private final Map<String, ArrayList<String>> interests;
     private final Map<String, ArrayList<String>> occupations;
     private Font font;
 
@@ -40,8 +40,8 @@ public class ContentManager {
         return images.get(name);
     }
 
-    public Map<String, ArrayList<String>> getIntestests() {
-        return intestests;
+    public Map<String, ArrayList<String>> getInterests() {
+        return interests;
     }
     public Map<String, ArrayList<String>> getOccupations() {
         return occupations;
@@ -50,7 +50,7 @@ public class ContentManager {
 
     public ContentManager() {
         images = new HashMap<>();
-        intestests = new HashMap<>();
+        interests = new HashMap<>();
         occupations = new HashMap<>();
     }
 
@@ -58,7 +58,7 @@ public class ContentManager {
         loadImages("/images");
         loadFont("/font/joystix.ttf");
         loadFont("/font/january.ttf");
-        loadWords("/words/interests", intestests);
+        loadWords("/words/interests", interests);
         loadWords("/words/occupations", occupations);
     }
 
