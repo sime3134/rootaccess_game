@@ -1,5 +1,6 @@
 package org.example.state;
 
+import org.example.audio.AudioPlayer;
 import org.example.base.ContentManager;
 import org.example.keyboard.GameController;
 import org.example.ui.UITextContainer;
@@ -7,8 +8,8 @@ import org.example.ui.UITextContainer;
 import java.awt.*;
 
 public class MenuState extends State {
-    public MenuState(GameController controller, ContentManager content) {
-        super(controller, content);
+    public MenuState(GameController controller, ContentManager content, AudioPlayer audioPlayer) {
+        super(controller, content, audioPlayer);
     }
 
     @Override

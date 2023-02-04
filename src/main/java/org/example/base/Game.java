@@ -1,5 +1,6 @@
 package org.example.base;
 
+import org.example.audio.AudioPlayer;
 import org.example.enums.WordType;
 import org.example.keyboard.GameController;
 import org.example.state.GameState;
@@ -23,12 +24,15 @@ public class Game {
 
     private final GameController controller;
 
+    private AudioPlayer audioPlayer;
+
     public Game(){
         gameFrame = new GameFrame(this);
         content = new ContentManager();
         content.loadContent();
+        audioPlayer = new AudioPlayer();
         controller = new GameController();
-        currentState = new GameState(controller, content);
+        currentState = new GameState(controller, content, audioPlayer);
     }
 
     public void update(){

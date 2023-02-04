@@ -1,5 +1,6 @@
 package org.example.state;
 
+import org.example.audio.AudioPlayer;
 import org.example.base.ContentManager;
 import org.example.base.Settings;
 import org.example.enums.WordType;
@@ -16,10 +17,10 @@ public class GameState extends State {
 
     private final TextGenerator textGen;
 
-    public GameState(GameController controller, ContentManager content) {
-        super(controller, content);
+    public GameState(GameController controller, ContentManager content, AudioPlayer audioPlayer) {
+        super(controller, content, audioPlayer);
         textGen = new TextGenerator(content.getInterests(), content.getOccupations());
-        textGen.createText(0.5f, 500);
+        textGen.createText(0.5f, 1100);
         test();
     }
 
@@ -51,12 +52,15 @@ public class GameState extends State {
     protected void handleInput() {
         if(controller.requestedLeft()) {
             pcContainer.moveLeft();
+            audioPlayer.playKeySound();
         }
         if(controller.requestedRight()) {
             pcContainer.moveRight();
+            audioPlayer.playKeySound();
         }
         if(controller.requestedConfirm()) {
             //TODO: check if word is correct
+            //audioPlayer.playSound();
         }
     }
 

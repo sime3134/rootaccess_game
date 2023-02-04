@@ -78,7 +78,8 @@ public class TextGenerator {
             possibleWrongWords.remove(wordIndex);
 
             int splitIndex;
-            if (wordToAdd.length() == 4) { splitIndex = 4;}
+            //System.out.println(wordToAdd);
+            if (wordToAdd.length() == 4) { splitIndex = 2;}
             else {splitIndex = rand.nextInt(2, wordToAdd.length() - 2);}
             text1Len += splitIndex;
             text2Len += wordToAdd.length() - splitIndex;
@@ -97,17 +98,15 @@ public class TextGenerator {
         // Finally, add a random word from the one of the correct categories at a random location
         int wordIndex = rand.nextInt(possibleCorrectWords.size());
         String correctWord = possibleCorrectWords.get(wordIndex);
-        int splitIndex = rand.nextInt(2, correctWord.length() - 2);
+        int splitIndex;
+        if (correctWord.length() == 4) { splitIndex = 2;}
+        else {splitIndex = rand.nextInt(2, correctWord.length() - 2);}
         int addIndex1 = rand.nextInt(screenText1.size() / 2) * 2;
         screenText1.add(addIndex1, new UIText(correctWord.substring(0, splitIndex), WordType.CORRECT));
         screenText1.add(addIndex1 + 1, new UIText(createFillerString(), WordType.FILLER));
         int addIndex2 = rand.nextInt(screenText2.size() / 2) * 2;
         screenText2.add(addIndex2, new UIText(correctWord.substring(splitIndex), WordType.CORRECT));
         screenText2.add(addIndex1 + 1, new UIText(createFillerString(), WordType.FILLER));
-
-        for (UIText word : screenText1) {
-            System.out.print(word.getText());
-        }
     }
 
     private String createFillerString() {

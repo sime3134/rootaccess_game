@@ -33,8 +33,6 @@ bike
 boulevard
 brakes
 bridge
-bus
-car
 carpool
 causeway
 caution
