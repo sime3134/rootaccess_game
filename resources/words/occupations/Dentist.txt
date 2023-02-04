@@ -9,11 +9,9 @@ appointment
 assistant
 bacteria
 bands
-bib
 bicuspid
 bite
 braces
-bridge
 bristle
 brush
 canine
@@ -29,14 +27,12 @@ correction
 crown
 cuspid
 decay
-degree
 dental
 dentist
 dentures
 diagnosis
 diploma
 drill
-eat
 education
 enamel
 endodontics
@@ -47,10 +43,8 @@ fear
 filling
 floss
 fluoride
-food
 gargle
 gingivitis
-gold
 gums
 health
 healthy
@@ -59,7 +53,6 @@ hygiene
 hygienist
 impacted
 implant
-impression
 incision
 incisor
 infection
@@ -69,8 +62,6 @@ injury
 inlay
 instrument
 insurance
-jaw
-lab
 laboratory
 lips
 local
@@ -85,7 +76,6 @@ nerve
 numb
 nurse
 office
-open
 operate
 orthodontist
 overbite
@@ -114,7 +104,6 @@ smile
 sugar
 surgery
 suture
-sweets
 teeth
 tissue
 tooth
@@ -124,5 +113,4 @@ toothpaste
 toothpick
 treatment
 underbite
-white
 whiten

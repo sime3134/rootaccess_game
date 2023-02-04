@@ -26,7 +26,6 @@ gingerbread
 gingersnaps
 honey
 icing
-jam
 jelly
 jellyroll
 ladyfingers
@@ -41,7 +40,6 @@ nougat
 pancakes
 parfait
 pastry
-pie
 popover
 popsicle
 praline
@@ -58,7 +56,6 @@ spumoni
 strudel
 sugar
 sundae
-sweets
 tart
 toffee
 torte

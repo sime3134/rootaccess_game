@@ -8,7 +8,6 @@ ammunition
 armistice
 armor
 armory
-arms
 army
 arrow
 arsenal
@@ -93,7 +92,6 @@ general
 grenade
 grunt
 guerrilla
-gun
 gunner
 gunpowder
 headquarters
@@ -108,7 +106,6 @@ intelligence
 invade
 invasion
 jeep
-jet
 kill
 leave
 lieutenant
@@ -120,7 +117,6 @@ marines
 marksman
 medal
 medic
-MIA
 midshipman
 military
 mine
@@ -140,7 +136,6 @@ pentagon
 plane
 platoon
 post
-POW
 private
 quartermaster
 radar
@@ -188,10 +183,8 @@ uniform
 unit
 veteran
 volley
-war
 warfare
 warrior
 weapon
-win
 wound
 yeoman
