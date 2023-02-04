@@ -28,33 +28,23 @@ public class UIText {
 
     private Color backgroundColor;
 
-    private boolean opacityGoDown;
-
     private Font font;
 
     private int timer;
 
     private boolean blink;
 
-    public Vector2D getPosition() {
-        return position;
-    }
-
     public void setPosition(int x, int y) {
         this.position.setX(x);
         this.position.setY(y);
     }
 
+    public WordType getWordType() {
+        return wordType;
+    }
+
     public Font getFont() {
         return font;
-    }
-
-    public void setFontSize(int fontSize) {
-        this.fontSize = fontSize;
-    }
-
-    public void setText(String text) {
-        this.text = text;
     }
 
     public String getText() {
@@ -72,14 +62,12 @@ public class UIText {
         this.fontFamily = fontFamily;
         this.fontColor = Color.decode("#78C475");
         this.backgroundColor = new Color(255, 255, 255, 0);
-        this.opacityGoDown = true;
         this.wordType = wordType;
         createFont();
 
         this.position = new Vector2D(0, 0);
         this.wordSplits = new Stack<>();
         wordSplits.add(new WordSplit(text, position, this));
-
         this.timer = 0;
         this.blink = true;
     }

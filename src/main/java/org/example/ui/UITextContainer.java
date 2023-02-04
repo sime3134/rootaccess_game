@@ -1,6 +1,7 @@
 package org.example.ui;
 
 import org.example.base.Vector2D;
+import org.example.enums.WordType;
 import org.example.utils.ImgUtils;
 
 import java.awt.*;
@@ -11,7 +12,6 @@ public class UITextContainer {
     private List<UIText> textComponents;
 
     private int currentSelection;
-    private int lastSelection;
 
     private Vector2D position;
 
@@ -26,7 +26,7 @@ public class UITextContainer {
 
     private int currentLineLength;
 
-    private final int maxLineLength = 55;
+    private final int maxLineLength = 58;
 
     private int nextWordXPos;
 
@@ -84,7 +84,13 @@ public class UITextContainer {
         }
 
         if(selectable) {
-            textComponents.get(0).setSelected(true);
+            for(int i = 0; i < textComponents.size(); i++) {
+                if(textComponents.get(i).getWordType() == WordType.SELECTABLE || textComponents.get(i).getWordType() == WordType.CORRECT) {
+                    currentSelection = i;
+                    break;
+                }
+            }
+            textComponents.get(currentSelection).setSelected(true);
         }
     }
 
@@ -124,17 +130,28 @@ public class UITextContainer {
 
     public void moveLeft() {
         if(currentSelection > 0) {
-            textComponents.get(currentSelection).setSelected(false);
-            currentSelection--;
+            int lastSelection = currentSelection;
+            for(int i = currentSelection - 1; i >= 0; i--) {
+                if(textComponents.get(i).getWordType() == WordType.SELECTABLE || textComponents.get(i).getWordType() == WordType.CORRECT) {
+                    currentSelection = i;
+                    break;
+                }
+            }
+            textComponents.get(lastSelection).setSelected(false);
             textComponents.get(currentSelection).setSelected(true);
-
         }
     }
 
     public void moveRight() {
         if(currentSelection < textComponents.size() - 1) {
-            textComponents.get(currentSelection).setSelected(false);
-            currentSelection++;
+            int lastSelection = currentSelection;
+            for(int i = currentSelection + 1; i < textComponents.size(); i++) {
+                if(textComponents.get(i).getWordType() == WordType.SELECTABLE || textComponents.get(i).getWordType() == WordType.CORRECT) {
+                    currentSelection = i;
+                    break;
+                }
+            }
+            textComponents.get(lastSelection).setSelected(false);
             textComponents.get(currentSelection).setSelected(true);
         }
     }
