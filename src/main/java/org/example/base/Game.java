@@ -1,6 +1,6 @@
 package org.example.base;
 
-import org.example.ui.TextContainer;
+import org.example.ui.UITextContainer;
 
 import java.awt.*;
 /**
@@ -12,7 +12,7 @@ public class Game {
     private final GameFrame gameFrame;
     private final ContentManager content;
 
-    private TextContainer container;
+    private UITextContainer container;
 
     public Game(){
         gameFrame = new GameFrame(this);
@@ -22,7 +22,7 @@ public class Game {
     }
 
     private void test() {
-        container = new TextContainer(520, 60, 660, 545);
+        container = new UITextContainer(520, 60, 660, 545);
     }
 
     public void update(){

@@ -2,14 +2,13 @@ package org.example.ui;
 
 import org.example.base.Vector2D;
 import org.example.utils.ImgUtils;
-import org.example.words.Word;
 
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class TextContainer {
-    private List<Word> words;
+public class UITextContainer {
+    private List<UIText> textComponents;
 
     private Vector2D position;
 
@@ -20,10 +19,26 @@ public class TextContainer {
     private Color backgroundColor = Color.RED;
     private Color borderColor = Color.GREEN;
 
-    public TextContainer(int posX, int posY, int sizeX, int sizeY){
-        words = new ArrayList<>();
+    private int currentLineLength;
+
+    private final int maxLineLength = 30;
+
+    public UITextContainer(int posX, int posY, int sizeX, int sizeY){
+        textComponents = new ArrayList<>();
         this.position = new Vector2D(posX,posY);
         this.size = new Vector2D(sizeX,sizeY);
+        this.currentLineLength = 0;
+    }
+
+    public void addText(UIText... text){
+        for (UIText t : text) {
+            if(currentLineLength + t.getText().length() > maxLineLength){
+                t.setLineBreaker(currentLineLength + t.getText().length() - maxLineLength);
+                currentLineLength = currentLineLength + t.getText().length() - maxLineLength;
+            }
+            t.splitWord();
+            textComponents.add(t);
+        }
     }
 
     public Image getSprite() {
@@ -49,8 +64,8 @@ public class TextContainer {
                 null
         );
 
-        for (Word word : words) {
-            word.draw(g);
+        for (UIText text : textComponents) {
+            text.draw(g);
         }
     }
 }
