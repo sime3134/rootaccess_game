@@ -41,7 +41,8 @@ public class ContentManager {
 
     public void loadContent() {
         loadImages("/images");
-        //loadFont("/font/joystix.ttf");
+        loadFont("/font/joystix.ttf");
+        loadFont("/font/january.ttf");
     }
 
     private void loadFont(String filePath) {

@@ -14,30 +14,59 @@ public class UITextContainer {
 
     private Vector2D size;
 
+    private int padding;
+
     private Image sprite;
 
-    private Color backgroundColor = Color.RED;
-    private Color borderColor = Color.GREEN;
+    private Color backgroundColor = new Color(0,0,0,0);
+    private Color borderColor = new Color(0,0,0,0);
 
     private int currentLineLength;
 
     private final int maxLineLength = 30;
 
-    public UITextContainer(int posX, int posY, int sizeX, int sizeY){
+    private int nextWordXPos;
+
+    private int nextWordYPos;
+
+    private boolean vertical;
+
+    public UITextContainer(int posX, int posY, int sizeX, int sizeY, int padding, boolean vertical){
         textComponents = new ArrayList<>();
         this.position = new Vector2D(posX,posY);
         this.size = new Vector2D(sizeX,sizeY);
         this.currentLineLength = 0;
+        this.nextWordXPos = 0;
+        this.nextWordYPos = 0;
+        this.padding = padding;
+        this.vertical = vertical;
     }
 
-    public void addText(UIText... text){
-        for (UIText t : text) {
-            if(currentLineLength + t.getText().length() > maxLineLength){
-                t.setLineBreaker(currentLineLength + t.getText().length() - maxLineLength);
-                currentLineLength = currentLineLength + t.getText().length() - maxLineLength;
+    public void addTexts(UIText... text){
+        if(!vertical) {
+            for (UIText t : text) {
+                t.setPosition(position.intX() + nextWordXPos + padding, position.intY() + nextWordYPos + padding);
+
+                if (currentLineLength + t.getText().length() > maxLineLength) {
+                    int newLineWidth = t.splitWord(currentLineLength + t.getText().length() - maxLineLength, position.intX());
+                    currentLineLength = currentLineLength + t.getText().length() - maxLineLength;
+                    nextWordXPos = position.intX() + 20 + newLineWidth;
+                    nextWordYPos += t.getHeight() + 10;
+                } else {
+                    nextWordXPos += t.getWidthOfFirstSplit();
+                    currentLineLength += t.getText().length();
+                }
+
+                textComponents.add(t);
             }
-            t.splitWord();
-            textComponents.add(t);
+        } else {
+            for (UIText t : text) {
+                t.setPosition(position.intX() + nextWordXPos + padding, position.intY() + nextWordYPos + padding);
+
+                nextWordYPos += t.getHeight() + 10;
+
+                textComponents.add(t);
+            }
         }
     }
 
