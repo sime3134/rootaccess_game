@@ -45,14 +45,8 @@ public class GameState extends State {
     }
 
     private void handleInput() {
-        if(controller.requestedUp()) {
-            System.out.println("up");
-        }
-        if(controller.requestedDown()) {
-            System.out.println("down");
-        }
         if(controller.requestedLeft()) {
-            System.out.println("left");
+
         }
         if(controller.requestedRight()) {
             System.out.println("right");

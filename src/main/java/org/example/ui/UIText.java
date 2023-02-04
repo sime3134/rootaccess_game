@@ -53,6 +53,10 @@ public class UIText {
         return text;
     }
 
+    public UIText(String text, WordType wordType){
+        this(text, 12, "Joystix Monospace", wordType);
+    }
+
     public UIText(String text, int fontSize, String fontFamily, WordType wordType) {
         this.text = text;
         this.fontSize = fontSize;

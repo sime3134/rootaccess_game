@@ -63,7 +63,6 @@ public class ContentManager {
     }
 
     private void loadFont(String filePath) {
-        System.out.println(ContentManager.class.getResource(filePath));
         URL resource = ContentManager.class.getResource(filePath);
         File fontFile = new File(resource.getFile());
         try {
