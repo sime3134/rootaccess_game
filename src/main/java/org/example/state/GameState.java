@@ -132,7 +132,7 @@ public class GameState extends State {
 
     private void progressLevel() {
         currentLevel++;
-        if (currentLevel < 5) {
+        if (currentLevel < 6) {
             String musicName = "Music_Stem-" + currentLevel + ".wav";
             audioPlayer.playMusic(musicName, (long) (System.currentTimeMillis() - timeMillis));
         }
