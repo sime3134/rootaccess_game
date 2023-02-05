@@ -35,7 +35,6 @@ herpetology
 hypothesis
 ichthyology
 immunology
-lab
 laboratory
 laws
 lepidoptery

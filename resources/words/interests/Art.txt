@@ -2,7 +2,6 @@ abstract
 airbrush
 animation
 architecture
-artist
 artistic
 artwork
 assemblage
@@ -24,7 +23,6 @@ clay
 cloisonné
 collage
 color
-compass
 composition
 contrast
 crayon
@@ -52,7 +50,6 @@ film
 form
 frame
 fresco
-gallery
 gesso
 gilding
 glass
@@ -63,11 +60,9 @@ graffiti
 graphite
 hammer
 hatching
-hue
 illustrate
 illustration
 image
-ink
 installation
 kiln
 line
@@ -89,7 +84,6 @@ painting
 palette
 paper
 pastel
-pen
 pencil
 perspective
 photo
@@ -134,7 +128,6 @@ vellum
 video
 visual
 watercolor
-wax
 wheel
 wood
 woodcut

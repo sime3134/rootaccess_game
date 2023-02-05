@@ -1,17 +1,12 @@
 abalone
 albatross
-algae
 amphibian
 anole
-aphid
-asp
 barnacle
 barracuda
 basilisk
 bass
-blackbird
 bonobo
-bug
 bull
 bullfrog
 bumblebee
@@ -26,7 +21,6 @@ chickadee
 chiton
 cobra
 cockroach
-cod
 colugo
 cottonmouth
 cutworm
@@ -34,7 +28,7 @@ damselfly
 diatom
 dolphin
 earwig
-Fabrosaurus
+fabrosaurus
 finch
 fireant
 flatworm
@@ -44,7 +38,6 @@ fowl
 frog
 fugu
 galagos
-gar
 gavial
 gerbil
 gnat
@@ -60,7 +53,7 @@ hyrax
 ibis
 imago
 katydid
-Kudu
+kudu
 ladybug
 larva
 lice
@@ -87,10 +80,9 @@ nautilus
 newt
 nymph
 onager
-Ornitholestes
-Ornithomimus
-Oviraptor
-ox
+ornitholestes
+ornithomimus
+oviraptor
 parakeet
 petrel
 plover

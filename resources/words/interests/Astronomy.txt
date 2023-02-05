@@ -13,9 +13,8 @@ conjunction
 cosmology
 cosmos
 crater
-day
 declination
-Deneb
+deneb
 density
 docking
 dust
@@ -45,10 +44,8 @@ lunar
 magnitude
 mare
 mass
-Mir
 muttnik
 nadir
-NASA
 nova
 observatory
 occultation
@@ -74,13 +71,12 @@ satellite
 scintillation
 sidereal
 singularity
-sky
 solar
 solstice
 space
 spectroscope
 spectrum
-Sputnik
+sputnik
 starlight
 supernova
 synodic
