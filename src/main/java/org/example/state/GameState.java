@@ -40,7 +40,6 @@ public class GameState extends State {
     public GameState(GameController controller, ContentManager content, AudioPlayer audioPlayer, Game game) {
         super(controller, content, audioPlayer);
         this.game = game;
-        audioPlayer.playMusic("Music_Stem-1.wav", 0);
         timeMillis = System.currentTimeMillis();
         personaList = new ArrayList<>();
         thereIsNewData = false;
