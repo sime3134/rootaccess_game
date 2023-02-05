@@ -60,6 +60,7 @@ public class Game {
             case "game" -> {
                 currentState = gameState;
                 audioPlayer.playMusic("Music_Stem-1.wav", 0);
+                audioPlayer.playSound("Find_the_Root_Pass.wav", 0);
             }
             case "menu" -> {
                 currentState = menuState;
