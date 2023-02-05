@@ -106,6 +106,7 @@ public class GameState extends State {
             if(pcContainer.getSelectedText().getWordType() == WordType.CORRECT) {
                 audioPlayer.playSound("Access_Granted.wav", 0);
                 game.getConnection().sendCorrect();
+                game.getTimer().resetTimer();
                 this.progressLevel();
             }else{
                 audioPlayer.playSound("Wrong_Answer.wav", 0);

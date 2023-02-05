@@ -51,6 +51,7 @@ public class Game {
         currentState.update(this);
         if(Timer.getSecondsLeft() < 0){
             setCurrentState("gameover");
+            timer.resetTimer();
         }
     }
 

@@ -68,8 +68,8 @@ public class GameOverState extends State {
             if(selectedButton == 0) {
                 // Play
                 game.getConnection().sendStartGame();
-                audioPlayer.playSound("UI-confirm_choice.wav", 0);
                 game.setCurrentState("game");
+                game.getTimer().resetTimer();
             } else if(selectedButton == 1) {
                 // Quit
                 audioPlayer.playSound("UI-confirm_choice.wav", 0);
