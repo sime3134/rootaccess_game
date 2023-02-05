@@ -181,10 +181,11 @@ public class UITextContainer {
             if (Math.abs(current.getX()-bestMatch.getX()) < Math.abs(currentDistance)) {
                 currentDistance = current.getX()-bestMatch.getX();
             } else {
-                idx = idx-moveStep;
+                idx = (idx-moveStep) % textComponents.size();
+                if (idx < 0) {idx = textComponents.size()-1;}
                 if (textComponents.get(idx).getWordType().equals(WordType.FILLER)) {
-                    int val1 = textComponents.get(idx-1).getX() - textComponents.get(currentSelectionIndex).getX();
-                    int val2 = textComponents.get(idx+1).getX() - textComponents.get(currentSelectionIndex).getX();
+                    int val1 = textComponents.get( (idx-1 < 0 ? 0 : idx - 1) ).getX() - textComponents.get(currentSelectionIndex).getX();
+                    int val2 = textComponents.get( (idx+1) % textComponents.size() ).getX() - textComponents.get(currentSelectionIndex).getX();
                     idx = Math.abs(val1) < Math.abs(val2) ? idx-1 : idx + 1;
                 }
                 selectedText = textComponents.get(idx);
