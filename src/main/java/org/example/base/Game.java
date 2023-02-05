@@ -45,6 +45,9 @@ public class Game {
 
     public void update(){
         currentState.update(this);
+        if(Timer.getSecondsLeft() < 0){
+            setCurrentState("gameover");
+        }
     }
 
     public void draw(Graphics g) {
@@ -69,6 +72,10 @@ public class Game {
             case "menu" -> {
                 currentState = menuState;
                 audioPlayer.playMusic("Menu-Music.wav", 0);
+            }
+            case "gameover" -> {
+                currentState = menuState;
+                audioPlayer.playSound("Access_denied.wav", 0);
             }
         }
     }
