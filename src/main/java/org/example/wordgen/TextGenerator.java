@@ -27,7 +27,7 @@ public class TextGenerator {
         interestsText = new ArrayList<>();
     };
 
-    public void createText(float difficulty, int length) {
+    public void createText(int spacing, int length) {
         Random rand = new Random();
         int text1Len = 0;
         int text2Len = 0;
@@ -87,10 +87,10 @@ public class TextGenerator {
             screenText2.add(new UIText(wordToAdd.substring(splitIndex), WordType.SELECTABLE));
 
             // Add filler
-            String fillString = createFillerString();
+            String fillString = createFillerString(spacing);
             text1Len += fillString.length();
             screenText1.add(new UIText(fillString, WordType.FILLER));
-            fillString = createFillerString();
+            fillString = createFillerString(spacing);
             text2Len += fillString.length();
             screenText2.add(new UIText(fillString, WordType.FILLER));
         }
@@ -103,15 +103,14 @@ public class TextGenerator {
         else {splitIndex = rand.nextInt(2, correctWord.length() - 2);}
         int addIndex1 = rand.nextInt(screenText1.size() / 2) * 2;
         screenText1.add(addIndex1, new UIText(correctWord.substring(0, splitIndex), WordType.CORRECT));
-        screenText1.add(addIndex1 + 1, new UIText(createFillerString(), WordType.FILLER));
+        screenText1.add(addIndex1 + 1, new UIText(createFillerString(spacing), WordType.FILLER));
         int addIndex2 = rand.nextInt(screenText2.size() / 2) * 2;
         screenText2.add(addIndex2, new UIText(correctWord.substring(splitIndex), WordType.CORRECT));
-        screenText2.add(addIndex1 + 1, new UIText(createFillerString(), WordType.FILLER));
+        screenText2.add(addIndex1 + 1, new UIText(createFillerString(spacing), WordType.FILLER));
     }
 
-    private String createFillerString() {
+    private String createFillerString(int len) {
         Random rand = new Random();
-        int len = 3;
         char[] fillerChars = {'!', '@', '#', '$', '%', '^', '&', '*', '(', ')',
                                 '_', '+', '{', '}', 34, '|', '?', '<', '>', '[',
                                 ']', 97, '.', '~', '1', '2', '3', '4', '5', '6',

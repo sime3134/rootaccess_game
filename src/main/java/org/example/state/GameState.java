@@ -10,19 +10,20 @@ import org.example.ui.UITextContainer;
 import org.example.wordgen.TextGenerator;
 
 import java.awt.*;
+import java.util.ArrayList;
+import java.util.List;
+
 
 public class GameState extends State {
     private UITextContainer pcContainer;
     private UITextContainer infoContainer;
 
-    private final TextGenerator textGen;
+    private List<UIText> texts;
 
     public GameState(GameController controller, ContentManager content, AudioPlayer audioPlayer) {
         super(controller, content, audioPlayer);
-        textGen = new TextGenerator(content.getInterests(), content.getOccupations());
-        textGen.createText(0.5f, 1100);
         audioPlayer.playMusic("music_stem_one.wav", 0);
-        test();
+        prepareContainers();
     }
 
 
@@ -34,17 +35,22 @@ public class GameState extends State {
         handleInput();
     }
 
-    public void test(){
+    public void prepareContainers(){
         pcContainer = new UITextContainer(520, 60, 660, 545, 20, false, true);
         infoContainer = new UITextContainer(130, 180, 270, 310, 20, true, false);
 
-        pcContainer.addTexts(textGen.getText1());
+        pcContainer.addTexts(texts);
 
-        /*UIText text8 = new UIText("John McJohnson", 40, "January Shine", WordType.NONE);
+        List<UIText> infos = new ArrayList<>();
+        UIText text8 = new UIText("John McJohnson", 40, "January Shine", WordType.NONE);
         UIText text9 = new UIText("Interests:", 36, "January Shine", WordType.NONE);
         UIText text10 = new UIText("- Computers", 36, "January Shine", WordType.NONE);
         UIText text11 = new UIText("- Cars", 36, "January Shine", WordType.NONE);
-        infoContainer.addTexts(text8, text9, text10, text11);*/
+        infos.add(text8);
+        infos.add(text9);
+        infos.add(text10);
+        infos.add(text11);
+        infoContainer.addTexts(infos);
 
         textContainers.add(pcContainer);
         textContainers.add(infoContainer);
