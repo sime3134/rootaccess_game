@@ -2,6 +2,7 @@ package org.example.base;
 
 import org.example.audio.AudioPlayer;
 import org.example.keyboard.GameController;
+import org.example.state.GameOverState;
 import org.example.state.GameState;
 import org.example.state.MenuState;
 import org.example.state.State;
@@ -74,7 +75,7 @@ public class Game {
                 audioPlayer.playMusic("Menu-Music.wav", 0);
             }
             case "gameover" -> {
-                currentState = menuState;
+                currentState = new GameOverState(controller, content, audioPlayer);
                 audioPlayer.playSound("Access_denied.wav", 0);
             }
         }
