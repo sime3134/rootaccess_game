@@ -146,4 +146,10 @@ public class UIText implements Serializable {
     public Color getFontColor() {
         return fontColor;
     }
+
+    public void setText(int secondsLeft) {
+        text = String.valueOf(secondsLeft);
+        wordSplits.clear();
+        wordSplits.add(new WordSplit(text, position, this));
+    }
 }
