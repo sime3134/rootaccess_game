@@ -22,12 +22,6 @@ public class GameOverState extends State {
     private int selectedButton = 0;
     private int lastSelectedButton = 0;
 
-    private UITextContainer infoContainer;
-
-    private UITextContainer connectContainer;
-
-    private String ipAddress;
-
     public GameOverState(GameController controller, ContentManager content, AudioPlayer audioPlayer) {
         super(controller, content, audioPlayer);
         buttons = new ArrayList<>();
@@ -44,17 +38,6 @@ public class GameOverState extends State {
         buttons.add(playButton);
         buttons.add(quitButton);
 
-        infoContainer = new UITextContainer(680, 180, 270, 310, 20, true, false);
-
-        List<UIText> infos = new ArrayList<>();
-        UIText text8 = new UIText("GAME OVER", 32, "Joystix Monospace",
-                WordType.NONE);
-        UIText text9 = new UIText("Play again?", 24, "Joystix Monospace",
-                WordType.NONE);
-        infoContainer.addTexts(infos);
-
-        textContainers.add(infoContainer);
-
     }
 
     @Override
@@ -65,9 +48,7 @@ public class GameOverState extends State {
         for (UIButton button : buttons) {
             button.update();
         }
-        if(!connectContainer.isVisible()) {
-            handleInput(game);
-        }
+        handleInput(game);
     }
 
     protected void handleInput(Game game) {
@@ -100,16 +81,6 @@ public class GameOverState extends State {
         if(lastSelectedButton != selectedButton) {
             buttons.get(lastSelectedButton).setSelected(false);
         }
-    }
-
-    public String findIP(){
-        try (Socket socket = new Socket()) {
-            socket.connect(new InetSocketAddress("google.com", 80));
-            return socket.getLocalAddress().getHostAddress();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return "Couldn't find IP address. Open 'cmd' and type 'ipconfig'.";
     }
 
     @Override
