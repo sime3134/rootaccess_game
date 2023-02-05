@@ -21,7 +21,7 @@ public class GameState extends State {
 
     private List<UIText> personaList;
 
-    private Game game;
+    private final Game game;
 
     private int currentLevel = 1;
     private float timeMillis;
@@ -29,6 +29,8 @@ public class GameState extends State {
     private boolean thereIsNewData;
 
     private int listId;
+
+    private String portraitName;
 
     public GameState(GameController controller, ContentManager content, AudioPlayer audioPlayer, Game game) {
         super(controller, content, audioPlayer);
@@ -99,7 +101,7 @@ public class GameState extends State {
     @Override
     public void draw(Graphics g) {
         g.drawImage(content.getImage("bg-" + Settings.getScreenHeight()), 0, 0, null);
-        g.drawImage(content.getImage("portrait-" + Settings.getScreenHeight()), 82, 55, null);
+        g.drawImage(content.getImage(portraitName + "-" + Settings.getScreenHeight()), 82, 55, null);
         for (UITextContainer container : textContainers) {
             container.draw(g);
         }
@@ -112,6 +114,10 @@ public class GameState extends State {
 
     public void setInterests(List<UIText> interestList) {
         personaList.addAll(interestList);
+    }
+
+    public void setPortraitName(String name){
+        this.portraitName = name;
     }
 
     public void setName(String name) {

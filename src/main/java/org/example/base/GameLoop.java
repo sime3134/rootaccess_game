@@ -47,6 +47,7 @@ public class GameLoop implements Runnable {
                 }
             }
             draw();
+
             //printStats();
         }
     }

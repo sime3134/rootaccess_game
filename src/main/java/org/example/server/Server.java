@@ -10,6 +10,7 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.security.SecureRandom;
 
 public class Server {
 
@@ -27,6 +28,10 @@ public class Server {
     private int spacing;
     private int numberOfWords;
 
+    private String portraitName;
+
+    private
+
     String name;
 
     public Server(ContentManager content){
@@ -39,6 +44,7 @@ public class Server {
         while(name.length() > 15) {
             name = faker.name().fullName();
         }
+        portraitName = getRandomPortraitName();
     }
 
     /**
@@ -151,6 +157,7 @@ public class Server {
             while(name.length() > 15) {
                 name = faker.name().fullName();
             }
+            portraitName = getRandomPortraitName();
             sendLists();
         }
 
@@ -161,6 +168,8 @@ public class Server {
                 oos.writeUTF(name);
                 oos.flush();
                 oos.writeInt(textGen.getId());
+                oos.flush();
+                oos.writeUTF(portraitName);
                 oos.flush();
                 if(id == 0) {
                     oos.writeInt(textGen.getText1().size());
@@ -184,5 +193,18 @@ public class Server {
                 e.printStackTrace();
             }
         }
+    }
+
+    private String getRandomPortraitName() {
+        SecureRandom random = new SecureRandom();
+        int randomInt = random.nextInt(1, 6);
+        return switch(randomInt) {
+            case 1 -> "portrait1";
+            case 2 -> "portrait2";
+            case 3 -> "portrait3";
+            case 4 -> "portrait4";
+            case 5 -> "portrait5";
+            default -> "portrait6";
+        };
     }
 }

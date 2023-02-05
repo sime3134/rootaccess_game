@@ -119,6 +119,7 @@ public class ServerConnection {
                 case "LIST" -> {
                     String name = ois.readUTF();
                     int id = ois.readInt();
+                    String portraitName = ois.readUTF();
                     List<UIText> textList = new ArrayList<>();
                     List<UIText> interestList = new ArrayList<>();
                     int size = ois.readInt();
@@ -142,6 +143,7 @@ public class ServerConnection {
                     gameState.setTexts(textList);
                     gameState.setName(name);
                     gameState.setListId(id);
+                    gameState.setPortraitName(portraitName);
                     System.out.println(id);
                     gameState.setInterests(interestList);
                     gameState.setThereIsNewData(true);

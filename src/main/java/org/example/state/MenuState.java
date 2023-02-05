@@ -82,7 +82,7 @@ public class MenuState extends State {
         List<UIText> connectInfo = new ArrayList<>();
             UIText text15 = new UIText("Waiting for other player to connect...", 24, "Joystix Monospace",
                 WordType.NONE);
-        UIText text16 = new UIText("Your fellow hacker can join with this IP address: ", 18, "Joystix " +
+        UIText text16 = new UIText("Your fellow hacker can join locally with this IP address: ", 18, "Joystix " +
                 "Monospace",
                 WordType.NONE);
         UIText text17 = new UIText(ipAddress, 18, "Joystix " +

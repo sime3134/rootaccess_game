@@ -24,12 +24,12 @@ public class Launcher {
         }else if (result == JOptionPane.NO_OPTION){
             ipAddress = (String)JOptionPane.showInputDialog(
                     null,
-                    "Enter the IP address of the user hosting the server",
-                    "Enter IP Address of server",
+                    "Enter the local IP address of the user hosting the server",
+                    "Enter IP Address of local server",
                     JOptionPane.PLAIN_MESSAGE,
                     null,
                     null,
-                    "Ex: 192.168.0.1");
+                    "192.168.");
         }else {
             System.exit(0);
         }
