@@ -92,7 +92,7 @@ public class GameState extends State {
                 game.getConnection().sendCorrect();
                 this.progressLevel();
             }else{
-                audioPlayer.playSound("Access_Denied.wav", 0);
+                audioPlayer.playSound("Wrong_Answer.wav", 0);
                 game.getConnection().sendIncorrect();
             }
         }

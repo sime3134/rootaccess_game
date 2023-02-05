@@ -19,4 +19,8 @@ public class Timer {
     public int getSecondsLeft() {
         return levelTime - getSecondsSinceStart();
     }
+
+    public void reduceSeconds(int timeToReduce) {
+        startTime += timeToReduce*1000;
+    }
 }
