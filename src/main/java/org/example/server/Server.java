@@ -61,7 +61,7 @@ public class Server {
         public void run(){
             Socket socket;
             try(ServerSocket serverSocket = new ServerSocket(port)){
-                System.out.println("ChatServer started and listening on port " + serverSocket.getLocalPort());
+                System.out.println("GameServer started and listening on port " + serverSocket.getLocalPort());
                 while(!Thread.interrupted()) {
                     socket = serverSocket.accept();
                     if (numberOfConnections == 0) {

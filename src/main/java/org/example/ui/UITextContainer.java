@@ -188,6 +188,7 @@ public class UITextContainer {
                     int val2 = textComponents.get( (idx+1) % textComponents.size() ).getX() - textComponents.get(currentSelectionIndex).getX();
                     idx = Math.abs(val1) < Math.abs(val2) ? idx-1 : idx + 1;
                 }
+                idx = idx % textComponents.size();
                 selectedText = textComponents.get(idx);
                 textComponents.get(currentSelectionIndex).setSelected(false);
                 selectedText.setSelected(true);
