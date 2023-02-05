@@ -1,11 +1,13 @@
 package org.example.base;
 
+import java.io.Serializable;
+
 /**
  * @author Simon Jern
  * A class to store and use both x and y values at the same, for example when storing positions.
  * Includes methods to make different calculations with the values.
  */
-public class Vector2D {
+public class Vector2D implements Serializable {
     private double x;
     private double y;
 

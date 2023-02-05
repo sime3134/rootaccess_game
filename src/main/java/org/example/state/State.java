@@ -2,6 +2,7 @@ package org.example.state;
 
 import org.example.audio.AudioPlayer;
 import org.example.base.ContentManager;
+import org.example.base.Game;
 import org.example.keyboard.GameController;
 import org.example.ui.UITextContainer;
 
@@ -24,9 +25,7 @@ public abstract class State {
         this.audioPlayer = audioPlayer;
     }
 
-    public abstract void update();
+    public abstract void update(Game game);
 
     public abstract void draw(Graphics g);
-
-    protected abstract void handleInput();
 }

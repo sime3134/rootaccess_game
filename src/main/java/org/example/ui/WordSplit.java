@@ -5,8 +5,9 @@ import org.example.utils.ImgUtils;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
+import java.io.Serializable;
 
-public class WordSplit {
+public class WordSplit implements Serializable {
 
     private String text;
 

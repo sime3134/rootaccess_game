@@ -3,6 +3,7 @@ package org.example.base;
 import org.example.audio.AudioPlayer;
 import org.example.keyboard.GameController;
 import org.example.state.GameState;
+import org.example.state.MenuState;
 import org.example.state.State;
 
 import java.awt.*;
@@ -21,16 +22,25 @@ public class Game {
 
     private ServerConnection connection;
 
+    private MenuState menuState;
+
+    private GameState gameState;
+
+    private ContentManager content;
+
     public Game(ContentManager content, String ipAddress){
-        connection = new ServerConnection(ipAddress);
         gameFrame = new GameFrame(this);
+        this.content = content;
         audioPlayer = new AudioPlayer();
         controller = new GameController();
-        currentState = new GameState(controller, content, audioPlayer);
+        gameState = new GameState(controller, content, audioPlayer, this);
+        menuState = new MenuState(controller, content, audioPlayer);
+        currentState = menuState;
+        connection = new ServerConnection(ipAddress, gameState, menuState, this);
     }
 
     public void update(){
-        currentState.update();
+        currentState.update(this);
     }
 
     public void draw(Graphics g) {
@@ -39,5 +49,19 @@ public class Game {
 
     public GameFrame getGameFrame() {
         return gameFrame;
+    }
+
+    public ServerConnection getConnection() {
+        return connection;
+    }
+
+    public void setCurrentState(String state) {
+        if(state.equals("game")) {
+            currentState = gameState;
+        }
+    }
+
+    public void reset() {
+        gameState.reset();
     }
 }

@@ -2,12 +2,12 @@ package org.example.state;
 
 import org.example.audio.AudioPlayer;
 import org.example.base.ContentManager;
+import org.example.base.Game;
 import org.example.base.Settings;
 import org.example.enums.WordType;
 import org.example.keyboard.GameController;
 import org.example.ui.UIText;
 import org.example.ui.UITextContainer;
-import org.example.wordgen.TextGenerator;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -17,18 +17,22 @@ import java.util.List;
 public class GameState extends State {
     private UITextContainer pcContainer;
     private UITextContainer infoContainer;
-
     private List<UIText> texts;
 
-    public GameState(GameController controller, ContentManager content, AudioPlayer audioPlayer) {
+    private List<UIText> personaList;
+
+    private Game game;
+
+    public GameState(GameController controller, ContentManager content, AudioPlayer audioPlayer, Game game) {
         super(controller, content, audioPlayer);
+        this.game = game;
         audioPlayer.playMusic("music_stem_one.wav", 0);
-        prepareContainers();
+        personaList = new ArrayList<>();
     }
 
 
     @Override
-    public void update() {
+    public void update(Game game) {
         for (UITextContainer container : textContainers) {
             container.update();
         }
@@ -40,17 +44,6 @@ public class GameState extends State {
         infoContainer = new UITextContainer(130, 180, 270, 310, 20, true, false);
 
         pcContainer.addTexts(texts);
-
-        List<UIText> infos = new ArrayList<>();
-        UIText text8 = new UIText("John McJohnson", 40, "January Shine", WordType.NONE);
-        UIText text9 = new UIText("Interests:", 36, "January Shine", WordType.NONE);
-        UIText text10 = new UIText("- Computers", 36, "January Shine", WordType.NONE);
-        UIText text11 = new UIText("- Cars", 36, "January Shine", WordType.NONE);
-        infos.add(text8);
-        infos.add(text9);
-        infos.add(text10);
-        infos.add(text11);
-        infoContainer.addTexts(infos);
 
         textContainers.add(pcContainer);
         textContainers.add(infoContainer);
@@ -74,8 +67,13 @@ public class GameState extends State {
             audioPlayer.playKeySound();
         }
         if(controller.requestedConfirm()) {
-            //TODO: check if word is correct
-            //audioPlayer.playSound();
+            if(pcContainer.getSelectedText().getWordType() == WordType.CORRECT) {
+                audioPlayer.playSound("Access_Granted.wav", 0);
+                game.getConnection().sendCorrect();
+            }else{
+                audioPlayer.playSound("Access_Denied.wav", 0);
+                game.getConnection().sendIncorrect();
+            }
         }
     }
 
@@ -86,5 +84,36 @@ public class GameState extends State {
         for (UITextContainer container : textContainers) {
             container.draw(g);
         }
+    }
+
+    public void setTexts(List<UIText> texts) {
+        this.texts = texts;
+        System.out.println("Received list");
+        prepareContainers();
+    }
+
+    public void setInterests(List<UIText> interestList) {
+        personaList.addAll(interestList);
+        infoContainer.addTexts(personaList);
+    }
+
+    public void setName(String name) {
+        UIText nameText = new UIText(name, 40, "January Shine", WordType.NONE);
+        UIText interests = new UIText("Interests:", 36, "January Shine", WordType.NONE);
+        personaList.add(nameText);
+        personaList.add(interests);
+    }
+
+    public void reset() {
+        if(pcContainer != null)
+            pcContainer.clear();
+        if(infoContainer != null)
+            infoContainer.clear();
+        if(personaList != null)
+            personaList.clear();
+        if(texts != null)
+            texts.clear();
+        if(textContainers != null)
+            textContainers.clear();
     }
 }

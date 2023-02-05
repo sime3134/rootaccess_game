@@ -1,5 +1,9 @@
 package org.example.base;
 
+import org.example.state.GameState;
+import org.example.state.MenuState;
+import org.example.state.State;
+import org.example.ui.UIText;
 import org.example.utils.Buffer;
 import org.example.utils.Request;
 
@@ -7,6 +11,8 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
+import java.util.ArrayList;
+import java.util.List;
 
 public class ServerConnection {
     private ObjectInputStream ois;
@@ -16,26 +22,45 @@ public class ServerConnection {
 
     private final Buffer<Request> requests;
 
-    public ServerConnection(String ipAddress){
+    private final GameState gameState;
+
+    private final MenuState menuState;
+
+    public ServerConnection(String ipAddress, GameState gameState, MenuState menuState, Game game){
+        this.gameState = gameState;
+        this.menuState = menuState;
         this.ipAddress = ipAddress;
         requests = new Buffer<>();
-        connectToServer();
+        connectToServer(game);
     }
 
-    private void connectToServer() {
+    private void connectToServer(Game game) {
         try {
             Socket socket = new Socket(ipAddress, 725);
             oos = new ObjectOutputStream(socket.getOutputStream());
             ois = new ObjectInputStream(socket.getInputStream());
-            new ReadFromServer().start();
+            new ReadFromServer(game).start();
             new WriteRequests().start();
 
         } catch (IOException e) {
             e.printStackTrace();
             System.out.println("Something went wrong connecting to the server.");
+            System.exit(0);
         }
 
         requests.put(new Request("LOGIN"));
+    }
+
+    public void sendCorrect() {
+        requests.put(new Request("CORRECT"));
+    }
+
+    public void sendIncorrect() {
+        requests.put(new Request("INCORRECT"));
+    }
+
+    public void sendStartGame() {
+        requests.put(new Request("STARTGAME"));
     }
 
     private class WriteRequests extends Thread{
@@ -58,11 +83,16 @@ public class ServerConnection {
     }
 
     private class ReadFromServer extends Thread {
+
+        private Game game;
+        public ReadFromServer(Game game) {
+            this.game = game;
+        }
         @Override
         public void run() {
             try {
                 while (!Thread.interrupted()) {
-                    handleIncoming();
+                    handleIncoming(game);
                 }
             } catch (IOException se) {
                 System.out.println("Could not reach the server. The server might be down.");
@@ -73,10 +103,39 @@ public class ServerConnection {
         /**
          * Delegates all incoming data from the server to the correct method or error.
          */
-        private void handleIncoming() throws IOException {
+        private void handleIncoming(Game game) throws IOException {
             String message = ois.readUTF();
 
             switch (message) {
+                case "STARTGAME" -> game.setCurrentState("game");
+                case "READY" -> menuState.playersReady();
+                case "LIST" -> {
+                    game.reset();
+                    String name = ois.readUTF();
+                    List<UIText> textList = new ArrayList<>();
+                    List<UIText> interestList = new ArrayList<>();
+                    int size = ois.readInt();
+                    for (int i = 0; i < size; i++) {
+                        try {
+                            UIText text = (UIText) ois.readObject();
+                            textList.add(text);
+                        } catch (ClassNotFoundException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                    int interestSize = ois.readInt();
+                    for (int i = 0; i < interestSize; i++) {
+                        try {
+                            UIText text = (UIText) ois.readObject();
+                            interestList.add(text);
+                        } catch (ClassNotFoundException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                    gameState.setTexts(textList);
+                    gameState.setName(name);
+                    gameState.setInterests(interestList);
+                }
                 default -> System.out.println("Unknown message: " + message);
             }
         }

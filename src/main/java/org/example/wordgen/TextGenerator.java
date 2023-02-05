@@ -28,6 +28,10 @@ public class TextGenerator {
     };
 
     public void createText(int spacing, int length) {
+        screenText1.clear();
+        screenText2.clear();
+        interestsText.clear();
+
         Random rand = new Random();
         int text1Len = 0;
         int text2Len = 0;
@@ -41,14 +45,14 @@ public class TextGenerator {
         for (int i = 0; i < noInterests; i++) {
             ArrayList<String> interestsArray = new ArrayList<String>(interests.keySet());
             String interestName = interestsArray.get(rand.nextInt(interestsArray.size()));
-            UIText interestUIText = new UIText(interestName, WordType.SELECTABLE);
+            UIText interestUIText = new UIText(interestName, 36, "January Shine", WordType.NONE);
             interestsText.add(interestUIText);
         }
 
         // Randomize the occupation category
         ArrayList<String> occupationsArray = new ArrayList<String>(occupations.keySet());
         String occupationName = occupationsArray.get(rand.nextInt(occupationsArray.size()));
-        occupationText = new UIText(occupationName, WordType.SELECTABLE);
+        occupationText = new UIText(occupationName, WordType.NONE);
 
 
         // Add all the words to the correct list (correct candidates or wrong candidates)
@@ -129,5 +133,9 @@ public class TextGenerator {
 
     public ArrayList<UIText> getText2() {
         return screenText2;
+    }
+
+    public ArrayList<UIText> getInterestsText() {
+        return interestsText;
     }
 }

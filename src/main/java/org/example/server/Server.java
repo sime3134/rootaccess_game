@@ -1,6 +1,8 @@
 package org.example.server;
 
+import com.github.javafaker.Faker;
 import org.example.base.ContentManager;
+import org.example.ui.UIText;
 import org.example.wordgen.TextGenerator;
 
 import java.io.IOException;
@@ -11,17 +13,24 @@ import java.net.Socket;
 
 public class Server {
 
-    private int numberOfConnections = 0;
+    private ClientHandler player1;
+    private ClientHandler player2;
 
-    private Client player1;
-    private Client player2;
+    private int numberOfConnections = 0;
 
     private final TextGenerator textGen;
 
+    private Faker faker = new Faker();
+
+    private int spacing;
+    private int numberOfWords;
+
     public Server(ContentManager content){
         new ConnectionListener(725).start();
+        spacing = 15;
+        numberOfWords = 300;
         textGen = new TextGenerator(content.getInterests(), content.getOccupations());
-        textGen.createText(15, 1100);
+        textGen.createText(spacing, numberOfWords);
     }
 
     /**
@@ -41,7 +50,14 @@ public class Server {
                 System.out.println("ChatServer started and listening on port " + serverSocket.getLocalPort());
                 while(!Thread.interrupted()) {
                     socket = serverSocket.accept();
-                    new ClientHandler(socket).start();
+                    if (numberOfConnections == 0) {
+                        player1 = new ClientHandler(socket, null, 0);
+                        player1.start();
+                    }else if (numberOfConnections == 1){
+                        player2 = new ClientHandler(socket, player1, 1);
+                        player1.friendOos = player2.oos;
+                        player2.start();
+                    }
                     numberOfConnections++;
                 }
             }catch(IOException e){
@@ -58,12 +74,27 @@ public class Server {
     private class ClientHandler extends Thread {
         private final ObjectOutputStream oos;
         private final ObjectInputStream ois;
-        private final Client client;
 
-        public ClientHandler(Socket socket) {
-            client = new Client(socket);
-            oos = client.getOutputStream();
-            ois = client.getInputStream();
+        private ObjectOutputStream friendOos;
+
+        private int id;
+
+        public ClientHandler(Socket socket, ClientHandler friend, int id) {
+            this.id = id;
+            try {
+                oos = new ObjectOutputStream(socket.getOutputStream());
+                ois = new ObjectInputStream(socket.getInputStream());
+                if (friend != null) {
+                    friendOos = friend.oos;
+                    friendOos.writeUTF("READY");
+                    friendOos.flush();
+                    oos.writeUTF("READY");
+                    oos.flush();
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+                throw new RuntimeException("Could not create ClientHandler");
+            }
         }
 
         @Override
@@ -84,12 +115,53 @@ public class Server {
 
             switch (request) {
                 case "LOGIN" -> sendLists();
+                case "STARTGAME" -> {
+                    friendOos.writeUTF("STARTGAME");
+                    friendOos.flush();
+                }
+                case "CORRECT" -> createAndSendNewLists();
+                case "INCORRECT" -> System.out.println("Server: " + "Received incorrect answer");
                 default -> System.out.println("Server: " + "Received unknown request: " + request);
             }
         }
-    }
 
-    private void sendLists() {
+        private void createAndSendNewLists() {
+            if(numberOfWords <= 1000){
+                numberOfWords += 100;
+            }
+            textGen.createText(--spacing, numberOfWords);
+            sendLists();
+        }
 
+        private void sendLists() {
+            String name = faker.name().fullName();
+            while(name.length() > 15) {
+                name = faker.name().fullName();
+            }
+            try {
+                oos.writeUTF("LIST");
+                oos.writeUTF(name);
+                if(id == 0) {
+                    oos.writeInt(textGen.getText1().size());
+                    for(UIText text : textGen.getText1()) {
+                        oos.writeObject(text);
+                        oos.flush();
+                    }
+                }else{
+                    oos.writeInt(textGen.getText2().size());
+                    for(UIText text : textGen.getText2()) {
+                        oos.writeObject(text);
+                        oos.flush();
+                    }
+                }
+                oos.writeInt(textGen.getInterestsText().size());
+                for(UIText text : textGen.getInterestsText()) {
+                    oos.writeObject(text);
+                    oos.flush();
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
     }
 }

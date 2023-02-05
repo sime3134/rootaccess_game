@@ -4,13 +4,14 @@ import org.example.base.Vector2D;
 import org.example.enums.WordType;
 
 import java.awt.*;
+import java.io.Serializable;
 import java.util.Stack;
 
 /**
  * @author Simon Jern
  * Implements a UI component that displays text.
  */
-public class UIText {
+public class UIText implements Serializable {
     private String text;
 
     private Stack<WordSplit> wordSplits;
