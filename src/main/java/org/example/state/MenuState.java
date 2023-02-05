@@ -12,6 +12,9 @@ import org.example.ui.UIText;
 import org.example.ui.UITextContainer;
 
 import java.awt.*;
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.net.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -25,10 +28,12 @@ public class MenuState extends State {
 
     private UITextContainer connectContainer;
 
+    private String ipAddress;
+
     public MenuState(GameController controller, ContentManager content, AudioPlayer audioPlayer) {
         super(controller, content, audioPlayer);
         buttons = new ArrayList<>();
-
+        ipAddress = findIP();
         prepareUI();
     }
 
@@ -77,7 +82,15 @@ public class MenuState extends State {
         List<UIText> connectInfo = new ArrayList<>();
             UIText text15 = new UIText("Waiting for other player to connect...", 24, "Joystix Monospace",
                 WordType.NONE);
+        UIText text16 = new UIText("Your fellow hacker can join with this IP address: ", 18, "Joystix " +
+                "Monospace",
+                WordType.NONE);
+        UIText text17 = new UIText(ipAddress, 18, "Joystix " +
+                "Monospace",
+                WordType.NONE);
         connectInfo.add(text15);
+        connectInfo.add(text16);
+        connectInfo.add(text17);
         connectContainer.addTexts(connectInfo);
 
         textContainers.add(connectContainer);
@@ -126,6 +139,16 @@ public class MenuState extends State {
         if(lastSelectedButton != selectedButton) {
             buttons.get(lastSelectedButton).setSelected(false);
         }
+    }
+
+    public String findIP(){
+        try (Socket socket = new Socket()) {
+            socket.connect(new InetSocketAddress("google.com", 80));
+            return socket.getLocalAddress().getHostAddress();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return "Couldn't find IP address. Open 'cmd' and type 'ipconfig'.";
     }
 
     @Override

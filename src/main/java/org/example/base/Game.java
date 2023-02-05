@@ -2,7 +2,6 @@ package org.example.base;
 
 import org.example.audio.AudioPlayer;
 import org.example.keyboard.GameController;
-import org.example.state.EmptyState;
 import org.example.state.GameState;
 import org.example.state.MenuState;
 import org.example.state.State;
@@ -59,7 +58,6 @@ public class Game {
     public void setCurrentState(String state) {
         switch (state) {
             case "game" -> currentState = gameState;
-            case "empty" -> currentState = new EmptyState(controller, content, audioPlayer);
             case "menu" -> currentState = menuState;
         }
     }
