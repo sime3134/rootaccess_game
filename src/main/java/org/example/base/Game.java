@@ -28,6 +28,8 @@ public class Game {
 
     private GameState gameState;
 
+    private GameOverState gameOverState;
+
     private ContentManager content;
 
     private Timer timer;
@@ -39,6 +41,7 @@ public class Game {
         controller = new GameController();
         gameState = new GameState(controller, content, audioPlayer, this);
         menuState = new MenuState(controller, content, audioPlayer);
+        gameOverState = new GameOverState(controller, content, audioPlayer);
         currentState = menuState;
         connection = new ServerConnection(ipAddress, gameState, menuState, this);
         timer = new Timer();
@@ -75,7 +78,7 @@ public class Game {
                 audioPlayer.playMusic("Menu-Music.wav", 0);
             }
             case "gameover" -> {
-                currentState = new GameOverState(controller, content, audioPlayer);
+                currentState = gameOverState;
                 audioPlayer.playSound("Access_denied.wav", 0);
             }
         }
