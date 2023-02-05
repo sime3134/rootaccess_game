@@ -26,7 +26,6 @@ public class GameOverState extends State {
         super(controller, content, audioPlayer);
         buttons = new ArrayList<>();
         prepareUI();
-        audioPlayer.playSound("Access_Denied.wav", 0);
     }
 
     private void prepareUI() {
