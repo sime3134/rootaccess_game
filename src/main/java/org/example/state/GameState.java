@@ -122,8 +122,8 @@ public class GameState extends State {
 
     public void setName(String name) {
         personaList.clear();
-        UIText nameText = new UIText(name, 40, "January Shine", WordType.NONE);
-        UIText interests = new UIText("Interests:", 36, "January Shine", WordType.NONE);
+        UIText nameText = new UIText(name, 24, "BAD", WordType.NONE);
+        UIText interests = new UIText("Interests:", 24, "BAD", WordType.NONE);
         personaList.add(nameText);
         personaList.add(interests);
     }

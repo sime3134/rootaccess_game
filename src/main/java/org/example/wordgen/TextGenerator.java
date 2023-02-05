@@ -47,7 +47,7 @@ public class TextGenerator {
         for (int i = 0; i < noInterests; i++) {
             ArrayList<String> interestsArray = new ArrayList<String>(interests.keySet());
             String interestName = interestsArray.get(rand.nextInt(interestsArray.size()));
-            UIText interestUIText = new UIText(interestName, 36, "January Shine", WordType.NONE);
+            UIText interestUIText = new UIText(interestName, 24, "BAD", WordType.NONE);
             interestsText.add(interestUIText);
         }
 
