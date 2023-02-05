@@ -8,6 +8,7 @@ import org.example.enums.WordType;
 import org.example.keyboard.GameController;
 import org.example.ui.UIText;
 import org.example.ui.UITextContainer;
+import org.example.utils.Timer;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -17,6 +18,8 @@ import java.util.List;
 public class GameState extends State {
     private UITextContainer pcContainer;
     private UITextContainer infoContainer;
+
+    private UITextContainer timerContainer;
     private List<UIText> texts;
 
     private List<UIText> personaList;
@@ -32,6 +35,10 @@ public class GameState extends State {
 
     private String portraitName;
 
+    private UIText timerText;
+
+    private Timer timer;
+
     public GameState(GameController controller, ContentManager content, AudioPlayer audioPlayer, Game game) {
         super(controller, content, audioPlayer);
         this.game = game;
@@ -39,12 +46,15 @@ public class GameState extends State {
         personaList = new ArrayList<>();
         thereIsNewData = false;
         listId = -1;
+        timer = new Timer();
         prepareContainers();
     }
 
 
     @Override
     public void update(Game game) {
+        timerText.setText(timer.getSecondsLeft());
+
         for (UITextContainer container : textContainers) {
             container.update();
         }
@@ -61,9 +71,19 @@ public class GameState extends State {
     }
 
     public void prepareContainers(){
-        pcContainer = new UITextContainer(520, 60, 660, 545, 20, false, true);
+        pcContainer = new UITextContainer(520, 60, 660, 500, 20, false, true);
         infoContainer = new UITextContainer(130, 180, 270, 310, 20, true, false);
+        timerContainer = new UITextContainer(770, 550, 270, 100, 20, false, false);
 
+        UIText timerDescText = new UIText("Lockdown imminent:  ", WordType.NONE, 18);
+        timerText = new UIText("40", WordType.NONE, 18);
+
+        List<UIText> timerTexts = new ArrayList<>();
+        timerTexts.add(timerDescText);
+        timerTexts.add(timerText);
+        timerContainer.addTexts(timerTexts);
+
+        textContainers.add(timerContainer);
         textContainers.add(pcContainer);
         textContainers.add(infoContainer);
     }
