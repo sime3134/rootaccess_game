@@ -22,6 +22,8 @@ public class GameOverState extends State {
     private int selectedButton = 0;
     private int lastSelectedButton = 0;
 
+    private UITextContainer infoContainer;
+
     public GameOverState(GameController controller, ContentManager content, AudioPlayer audioPlayer) {
         super(controller, content, audioPlayer);
         buttons = new ArrayList<>();
@@ -29,14 +31,24 @@ public class GameOverState extends State {
     }
 
     private void prepareUI() {
-        UIButton playButton = new UIButton("Play Again", new Vector2D((Settings.getScreenWidth() / 2) - 50, 200), 100,
+        UIButton playButton = new UIButton("Play Again", new Vector2D((Settings.getScreenWidth() / 2) - 100, 200)
+                , 200,
                 50);
-        UIButton quitButton = new UIButton("Quit", new Vector2D((Settings.getScreenWidth() / 2) - 50, 300), 100,
+        UIButton quitButton = new UIButton("Quit", new Vector2D((Settings.getScreenWidth() / 2) - 100, 300), 200,
                 50);
 
         buttons.add(playButton);
         buttons.add(quitButton);
 
+        infoContainer = new UITextContainer(880, 280, 270, 310, 20, true, false);
+
+        List<UIText> infos = new ArrayList<>();
+        UIText text8 = new UIText("GAME OVER!", 24, "Joystix Monospace",
+                WordType.NONE);
+        infos.add(text8);
+        infoContainer.addTexts(infos);
+
+        textContainers.add(infoContainer);
     }
 
     @Override
