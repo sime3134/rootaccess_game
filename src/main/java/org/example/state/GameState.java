@@ -23,6 +23,9 @@ public class GameState extends State {
 
     private Game game;
 
+    private int currentLevel = 1;
+    private float timeMillis;
+
     private boolean thereIsNewData;
 
     private int listId;
@@ -31,6 +34,7 @@ public class GameState extends State {
         super(controller, content, audioPlayer);
         this.game = game;
         audioPlayer.playMusic("Music_Stem-1.wav", 0);
+        timeMillis = System.currentTimeMillis();
         personaList = new ArrayList<>();
         thereIsNewData = false;
         listId = -1;
@@ -84,6 +88,7 @@ public class GameState extends State {
             if(pcContainer.getSelectedText().getWordType() == WordType.CORRECT) {
                 audioPlayer.playSound("Access_Granted.wav", 0);
                 game.getConnection().sendCorrect();
+                this.progressLevel();
             }else{
                 audioPlayer.playSound("Access_Denied.wav", 0);
                 game.getConnection().sendIncorrect();
@@ -123,5 +128,13 @@ public class GameState extends State {
 
     public void setListId(int id) {
         this.listId = id;
+    }
+
+    private void progressLevel() {
+        currentLevel++;
+        if (currentLevel < 5) {
+            String musicName = "Music_Stem-" + currentLevel + ".wav";
+            audioPlayer.playMusic(musicName, (long) (System.currentTimeMillis() - timeMillis));
+        }
     }
 }
