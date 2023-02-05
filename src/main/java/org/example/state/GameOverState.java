@@ -16,7 +16,7 @@ import java.net.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MenuState extends State {
+public class GameOverState extends State {
     private List<UIButton> buttons;
 
     private int selectedButton = 0;
@@ -28,16 +28,15 @@ public class MenuState extends State {
 
     private String ipAddress;
 
-    public MenuState(GameController controller, ContentManager content, AudioPlayer audioPlayer) {
+    public GameOverState(GameController controller, ContentManager content, AudioPlayer audioPlayer) {
         super(controller, content, audioPlayer);
         buttons = new ArrayList<>();
-        ipAddress = findIP();
         prepareUI();
-        audioPlayer.playMusic("Menu-Music.wav", 0);
+        audioPlayer.playSound("Access_Denied.wav", 0);
     }
 
     private void prepareUI() {
-        UIButton playButton = new UIButton("Play", new Vector2D((Settings.getScreenWidth() / 2) - 50, 200), 100,
+        UIButton playButton = new UIButton("Play Again", new Vector2D((Settings.getScreenWidth() / 2) - 50, 200), 100,
                 50);
         UIButton quitButton = new UIButton("Quit", new Vector2D((Settings.getScreenWidth() / 2) - 50, 300), 100,
                 50);
@@ -48,51 +47,14 @@ public class MenuState extends State {
         infoContainer = new UITextContainer(680, 180, 270, 310, 20, true, false);
 
         List<UIText> infos = new ArrayList<>();
-        UIText text8 = new UIText("Help each other to find the root password!", 12, "Joystix Monospace",
+        UIText text8 = new UIText("GAME OVER", 32, "Joystix Monospace",
                 WordType.NONE);
-        UIText text9 = new UIText("Find the correct word by matching letter", 12, "Joystix Monospace",
+        UIText text9 = new UIText("Play again?", 24, "Joystix Monospace",
                 WordType.NONE);
-        UIText text10 = new UIText("combinations on each other's screens.", 12, "Joystix Monospace",
-                WordType.NONE);
-        UIText text11 = new UIText("Look at the individuals interests to the left!", 12, "Joystix Monospace",
-                WordType.NONE);
-        UIText text12 = new UIText("Move between words with WASD or arrow keys", 12, "Joystix Monospace",
-                WordType.NONE);
-        UIText text13 = new UIText("and confirm your choice with enter.", 12, "Joystix Monospace",
-                WordType.NONE);
-        UIText text14 = new UIText("You lose time with every mistake!", 12, "Joystix Monospace",
-                WordType.NONE);
-        infos.add(text8);
-        infos.add(text9);
-        infos.add(text10);
-        infos.add(text11);
-        infos.add(text12);
-        infos.add(text13);
-        infos.add(text14);
         infoContainer.addTexts(infos);
 
         textContainers.add(infoContainer);
 
-        connectContainer = new UITextContainer((Settings.getScreenWidth() / 2) - 500, 180, 1000, 310, 20, true,
-                false);
-
-        connectContainer.setBackgroundColor(Color.GRAY);
-
-        List<UIText> connectInfo = new ArrayList<>();
-            UIText text15 = new UIText("Waiting for other player to connect...", 24, "Joystix Monospace",
-                WordType.NONE);
-        UIText text16 = new UIText("Your fellow hacker can join locally with this IP address: ", 18, "Joystix " +
-                "Monospace",
-                WordType.NONE);
-        UIText text17 = new UIText(ipAddress, 18, "Joystix " +
-                "Monospace",
-                WordType.NONE);
-        connectInfo.add(text15);
-        connectInfo.add(text16);
-        connectInfo.add(text17);
-        connectContainer.addTexts(connectInfo);
-
-        textContainers.add(connectContainer);
     }
 
     @Override
@@ -128,7 +90,6 @@ public class MenuState extends State {
                 game.getConnection().sendStartGame();
                 audioPlayer.playSound("UI-confirm_choice.wav", 0);
                 game.setCurrentState("game");
-                audioPlayer.playSound("Find_the_Root_Pass.wav", 0);
             } else if(selectedButton == 1) {
                 // Quit
                 audioPlayer.playSound("UI-confirm_choice.wav", 0);
@@ -162,7 +123,4 @@ public class MenuState extends State {
         }
     }
 
-    public void playersReady() {
-        connectContainer.setVisible(false);
-    }
 }

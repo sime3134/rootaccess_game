@@ -57,8 +57,14 @@ public class Game {
 
     public void setCurrentState(String state) {
         switch (state) {
-            case "game" -> currentState = gameState;
-            case "menu" -> currentState = menuState;
+            case "game" -> {
+                currentState = gameState;
+                audioPlayer.playMusic("Music_Stem-1.wav", 0);
+            }
+            case "menu" -> {
+                currentState = menuState;
+                audioPlayer.playMusic("Menu-Music.wav", 0);
+            }
         }
     }
 

@@ -112,7 +112,7 @@ public class ServerConnection {
                     oos.flush();
                 }
                 case "FRIENDINCORRECT" -> {
-                    game.getAudioPlayer().playSound("Access_Denied.wav", 0);
+                    game.getAudioPlayer().playSound("Wrong_Answer.wav", 0);
                 }
                 case "STARTGAME" -> game.setCurrentState("game");
                 case "READY" -> menuState.playersReady();
