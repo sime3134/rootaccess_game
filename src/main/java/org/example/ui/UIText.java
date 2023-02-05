@@ -55,8 +55,8 @@ public class UIText implements Serializable {
         return text;
     }
 
-    public UIText(String text, WordType wordType){
-        this(text, 12, "Joystix Monospace", wordType);
+    public UIText(String text, WordType wordType, int fontSize){
+        this(text, fontSize, "Joystix Monospace", wordType);
     }
 
     public UIText(String text, int fontSize, String fontFamily, WordType wordType) {

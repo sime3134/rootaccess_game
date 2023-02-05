@@ -47,6 +47,8 @@ public class GameState extends State {
         if(thereIsNewData){
             pcContainer.clear();
             infoContainer.clear();
+            // Update font size and spacing
+            pcContainer.updateFontSize();
             pcContainer.addTexts(texts);
             infoContainer.addTexts(personaList);
             thereIsNewData = false;

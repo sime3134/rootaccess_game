@@ -27,7 +27,7 @@ public class TextGenerator {
         interestsText = new ArrayList<>();
     };
 
-    public void createText(int spacing, int length) {
+    public void createText(int spacing, int length, int fontSize) {
         id = nextId;
         nextId++;
         screenText1.clear();
@@ -54,7 +54,7 @@ public class TextGenerator {
         // Randomize the occupation category
         ArrayList<String> occupationsArray = new ArrayList<String>(occupations.keySet());
         String occupationName = occupationsArray.get(rand.nextInt(occupationsArray.size()));
-        occupationText = new UIText(occupationName, WordType.NONE);
+        occupationText = new UIText(occupationName, WordType.NONE, fontSize);
 
 
         // Add all the words to the correct list (correct candidates or wrong candidates)
@@ -89,16 +89,16 @@ public class TextGenerator {
             else {splitIndex = rand.nextInt(2, wordToAdd.length() - 2);}
             text1Len += splitIndex;
             text2Len += wordToAdd.length() - splitIndex;
-            screenText1.add(new UIText(wordToAdd.substring(0, splitIndex), WordType.SELECTABLE));
-            screenText2.add(new UIText(wordToAdd.substring(splitIndex), WordType.SELECTABLE));
+            screenText1.add(new UIText(wordToAdd.substring(0, splitIndex), WordType.SELECTABLE, fontSize));
+            screenText2.add(new UIText(wordToAdd.substring(splitIndex), WordType.SELECTABLE, fontSize));
 
             // Add filler
             String fillString = createFillerString(spacing);
             text1Len += fillString.length();
-            screenText1.add(new UIText(fillString, WordType.FILLER));
+            screenText1.add(new UIText(fillString, WordType.FILLER, fontSize));
             fillString = createFillerString(spacing);
             text2Len += fillString.length();
-            screenText2.add(new UIText(fillString, WordType.FILLER));
+            screenText2.add(new UIText(fillString, WordType.FILLER, fontSize));
         }
 
         // Finally, add a random word from the one of the correct categories at a random location
@@ -108,11 +108,11 @@ public class TextGenerator {
         if (correctWord.length() == 4) { splitIndex = 2;}
         else {splitIndex = rand.nextInt(2, correctWord.length() - 2);}
         int addIndex1 = rand.nextInt(screenText1.size() / 2) * 2;
-        screenText1.add(addIndex1, new UIText(correctWord.substring(0, splitIndex), WordType.CORRECT));
-        screenText1.add(addIndex1 + 1, new UIText(createFillerString(spacing), WordType.FILLER));
+        screenText1.add(addIndex1, new UIText(correctWord.substring(0, splitIndex), WordType.CORRECT, fontSize));
+        screenText1.add(addIndex1 + 1, new UIText(createFillerString(spacing), WordType.FILLER, fontSize));
         int addIndex2 = rand.nextInt(screenText2.size() / 2) * 2;
-        screenText2.add(addIndex2, new UIText(correctWord.substring(splitIndex), WordType.CORRECT));
-        screenText2.add(addIndex1 + 1, new UIText(createFillerString(spacing), WordType.FILLER));
+        screenText2.add(addIndex2, new UIText(correctWord.substring(splitIndex), WordType.CORRECT, fontSize));
+        screenText2.add(addIndex1 + 1, new UIText(createFillerString(spacing), WordType.FILLER, fontSize));
     }
 
     private String createFillerString(int len) {

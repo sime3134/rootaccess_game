@@ -26,8 +26,7 @@ public class UITextContainer {
 
     private int currentLineLength;
 
-    private final int maxLineLength = 50;
-
+    private int maxLineLength = 24;
     private int nextWordXPos;
 
     private int nextWordYPos;
@@ -60,7 +59,8 @@ public class UITextContainer {
 
                 if(currentLineLength + t.getText().length() > maxLineLength){
                     t.setPosition(nextWordXPos, nextWordYPos);
-                    Vector2D newPos = t.splitWord(currentLineLength + t.getText().length() - maxLineLength,
+                    //Vector2D newPos = t.splitWord(currentLineLength + t.getText().length() - maxLineLength,
+                    Vector2D newPos = t.splitWord(maxLineLength - currentLineLength,
                             position.intX() + padding, nextWordYPos);
                     nextWordXPos = newPos.intX();
                     nextWordYPos = newPos.intY();
@@ -229,5 +229,9 @@ public class UITextContainer {
         currentLineLength = 0;
         this.nextWordXPos = position.intX() + padding;
         this.nextWordYPos = position.intY() + padding;
+    }
+
+    public void updateFontSize() {
+        maxLineLength += 1;
     }
 }

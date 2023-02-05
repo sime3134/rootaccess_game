@@ -20,6 +20,8 @@ public class Server {
 
     private final TextGenerator textGen;
 
+    private int fontSize = 28;
+
     private Faker faker = new Faker();
 
     private int spacing;
@@ -29,10 +31,10 @@ public class Server {
 
     public Server(ContentManager content){
         new ConnectionListener(725).start();
-        spacing = 15;
-        numberOfWords = 300;
+        spacing = 6;
+        numberOfWords = 100;
         textGen = new TextGenerator(content.getInterests(), content.getOccupations());
-        textGen.createText(spacing, numberOfWords);
+        textGen.createText(spacing, numberOfWords, fontSize);
         name = faker.name().fullName();
         while(name.length() > 15) {
             name = faker.name().fullName();
@@ -140,9 +142,11 @@ public class Server {
 
         private void createAndSendNewLists() {
             if(numberOfWords <= 1000){
-                numberOfWords += 100;
+                numberOfWords += 20;
             }
-            textGen.createText(--spacing, numberOfWords);
+            // Do --spacing for lower spacing
+            fontSize = fontSize - 1;
+            textGen.createText(spacing, numberOfWords, fontSize);
             name = faker.name().fullName();
             while(name.length() > 15) {
                 name = faker.name().fullName();
