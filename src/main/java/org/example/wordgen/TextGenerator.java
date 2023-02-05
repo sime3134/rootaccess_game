@@ -3,13 +3,13 @@ package org.example.wordgen;
 import org.example.enums.WordType;
 import org.example.ui.UIText;
 
-import java.io.*;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Map;
 import java.util.Random;
 
 public class TextGenerator {
+    private int id;
+    private static int nextId = 0;
 
     private ArrayList<UIText> screenText1;
     private ArrayList<UIText> screenText2;
@@ -28,6 +28,8 @@ public class TextGenerator {
     };
 
     public void createText(int spacing, int length) {
+        id = nextId;
+        nextId++;
         screenText1.clear();
         screenText2.clear();
         interestsText.clear();
@@ -137,5 +139,9 @@ public class TextGenerator {
 
     public ArrayList<UIText> getInterestsText() {
         return interestsText;
+    }
+
+    public int getId() {
+        return id;
     }
 }

@@ -2,7 +2,6 @@ package org.example.base;
 
 import org.example.state.GameState;
 import org.example.state.MenuState;
-import org.example.state.State;
 import org.example.ui.UIText;
 import org.example.utils.Buffer;
 import org.example.utils.Request;
@@ -107,11 +106,19 @@ public class ServerConnection {
             String message = ois.readUTF();
 
             switch (message) {
+                case "FRIENDCORRECT" -> {
+                    game.getAudioPlayer().playSound("Access_Granted.wav", 0);
+                    oos.writeUTF("LOGIN");
+                    oos.flush();
+                }
+                case "FRIENDINCORRECT" -> {
+                    game.getAudioPlayer().playSound("Access_Denied.wav", 0);
+                }
                 case "STARTGAME" -> game.setCurrentState("game");
                 case "READY" -> menuState.playersReady();
                 case "LIST" -> {
-                    game.reset();
                     String name = ois.readUTF();
+                    int id = ois.readInt();
                     List<UIText> textList = new ArrayList<>();
                     List<UIText> interestList = new ArrayList<>();
                     int size = ois.readInt();
@@ -134,7 +141,10 @@ public class ServerConnection {
                     }
                     gameState.setTexts(textList);
                     gameState.setName(name);
+                    gameState.setListId(id);
+                    System.out.println(id);
                     gameState.setInterests(interestList);
+                    gameState.setThereIsNewData(true);
                 }
                 default -> System.out.println("Unknown message: " + message);
             }

@@ -23,11 +23,18 @@ public class GameState extends State {
 
     private Game game;
 
+    private boolean thereIsNewData;
+
+    private int listId;
+
     public GameState(GameController controller, ContentManager content, AudioPlayer audioPlayer, Game game) {
         super(controller, content, audioPlayer);
         this.game = game;
-        audioPlayer.playMusic("music_stem_one.wav", 0);
+        audioPlayer.playMusic("Music-Stem-1.wav", 0);
         personaList = new ArrayList<>();
+        thereIsNewData = false;
+        listId = -1;
+        prepareContainers();
     }
 
 
@@ -37,13 +44,18 @@ public class GameState extends State {
             container.update();
         }
         handleInput();
+        if(thereIsNewData){
+            pcContainer.clear();
+            infoContainer.clear();
+            pcContainer.addTexts(texts);
+            infoContainer.addTexts(personaList);
+            thereIsNewData = false;
+        }
     }
 
     public void prepareContainers(){
         pcContainer = new UITextContainer(520, 60, 660, 545, 20, false, true);
         infoContainer = new UITextContainer(130, 180, 270, 310, 20, true, false);
-
-        pcContainer.addTexts(texts);
 
         textContainers.add(pcContainer);
         textContainers.add(infoContainer);
@@ -89,31 +101,25 @@ public class GameState extends State {
     public void setTexts(List<UIText> texts) {
         this.texts = texts;
         System.out.println("Received list");
-        prepareContainers();
     }
 
     public void setInterests(List<UIText> interestList) {
         personaList.addAll(interestList);
-        infoContainer.addTexts(personaList);
     }
 
     public void setName(String name) {
+        personaList.clear();
         UIText nameText = new UIText(name, 40, "January Shine", WordType.NONE);
         UIText interests = new UIText("Interests:", 36, "January Shine", WordType.NONE);
         personaList.add(nameText);
         personaList.add(interests);
     }
 
-    public void reset() {
-        if(pcContainer != null)
-            pcContainer.clear();
-        if(infoContainer != null)
-            infoContainer.clear();
-        if(personaList != null)
-            personaList.clear();
-        if(texts != null)
-            texts.clear();
-        if(textContainers != null)
-            textContainers.clear();
+    public void setThereIsNewData(boolean thereIsNewData) {
+        this.thereIsNewData = thereIsNewData;
+    }
+
+    public void setListId(int id) {
+        this.listId = id;
     }
 }

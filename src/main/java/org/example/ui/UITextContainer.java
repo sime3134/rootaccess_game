@@ -225,5 +225,8 @@ public class UITextContainer {
         textComponents.clear();
         currentSelectionIndex = 0;
         selectedText = null;
+        currentLineLength = 0;
+        this.nextWordXPos = position.intX() + padding;
+        this.nextWordYPos = position.intY() + padding;
     }
 }

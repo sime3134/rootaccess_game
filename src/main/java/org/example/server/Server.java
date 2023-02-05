@@ -25,12 +25,18 @@ public class Server {
     private int spacing;
     private int numberOfWords;
 
+    String name;
+
     public Server(ContentManager content){
         new ConnectionListener(725).start();
         spacing = 15;
         numberOfWords = 300;
         textGen = new TextGenerator(content.getInterests(), content.getOccupations());
         textGen.createText(spacing, numberOfWords);
+        name = faker.name().fullName();
+        while(name.length() > 15) {
+            name = faker.name().fullName();
+        }
     }
 
     /**
@@ -119,8 +125,15 @@ public class Server {
                     friendOos.writeUTF("STARTGAME");
                     friendOos.flush();
                 }
-                case "CORRECT" -> createAndSendNewLists();
-                case "INCORRECT" -> System.out.println("Server: " + "Received incorrect answer");
+                case "CORRECT" -> {
+                    createAndSendNewLists();
+                    friendOos.writeUTF("FRIENDCORRECT");
+                    friendOos.flush();
+                }
+                case "INCORRECT" -> {
+                    friendOos.writeUTF("FRIENDINCORRECT");
+                    friendOos.flush();
+                }
                 default -> System.out.println("Server: " + "Received unknown request: " + request);
             }
         }
@@ -130,17 +143,21 @@ public class Server {
                 numberOfWords += 100;
             }
             textGen.createText(--spacing, numberOfWords);
+            name = faker.name().fullName();
+            while(name.length() > 15) {
+                name = faker.name().fullName();
+            }
             sendLists();
         }
 
         private void sendLists() {
-            String name = faker.name().fullName();
-            while(name.length() > 15) {
-                name = faker.name().fullName();
-            }
             try {
                 oos.writeUTF("LIST");
+                oos.flush();
                 oos.writeUTF(name);
+                oos.flush();
+                oos.writeInt(textGen.getId());
+                oos.flush();
                 if(id == 0) {
                     oos.writeInt(textGen.getText1().size());
                     for(UIText text : textGen.getText1()) {
