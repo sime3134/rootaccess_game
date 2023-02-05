@@ -5,6 +5,7 @@ import org.example.state.MenuState;
 import org.example.ui.UIText;
 import org.example.utils.Buffer;
 import org.example.utils.Request;
+import org.example.utils.Timer;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -55,7 +56,7 @@ public class ServerConnection {
     }
 
     public void sendIncorrect() {
-        requests.put(new Request("INCORRECT"));
+        requests.put(new Request("INCORRECT", Timer.getSecondsLeft()));
     }
 
     public void sendStartGame() {
@@ -113,9 +114,14 @@ public class ServerConnection {
                 }
                 case "FRIENDINCORRECT" -> {
                     game.getAudioPlayer().playSound("Access_Denied.wav", 0);
-
+                    int seconds = ois.readInt();
+                    System.out.println("Received: " + seconds);
+                    Timer.setSecondsLeft(seconds);
                 }
-                case "STARTGAME" -> game.setCurrentState("game");
+                case "STARTGAME" -> {
+                    game.setCurrentState("game");
+                    game.getTimer().resetTimer();
+                }
                 case "READY" -> menuState.playersReady();
                 case "LIST" -> {
                     String name = ois.readUTF();

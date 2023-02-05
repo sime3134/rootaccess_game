@@ -128,6 +128,7 @@ public class MenuState extends State {
                 audioPlayer.playSound("UI-confirm_choice.wav", 0);
                 game.setCurrentState("game");
                 audioPlayer.playSound("Find_the_Root_Pass.wav", 0);
+                game.getTimer().resetTimer();
             } else if(selectedButton == 1) {
                 // Quit
                 audioPlayer.playSound("UI-confirm_choice.wav", 0);

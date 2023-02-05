@@ -5,6 +5,7 @@ import org.example.keyboard.GameController;
 import org.example.state.GameState;
 import org.example.state.MenuState;
 import org.example.state.State;
+import org.example.utils.Timer;
 
 import java.awt.*;
 /**
@@ -28,6 +29,8 @@ public class Game {
 
     private ContentManager content;
 
+    private Timer timer;
+
     public Game(ContentManager content, String ipAddress){
         gameFrame = new GameFrame(this);
         this.content = content;
@@ -37,6 +40,7 @@ public class Game {
         menuState = new MenuState(controller, content, audioPlayer);
         currentState = menuState;
         connection = new ServerConnection(ipAddress, gameState, menuState, this);
+        timer = new Timer();
     }
 
     public void update(){
@@ -64,5 +68,9 @@ public class Game {
 
     public AudioPlayer getAudioPlayer() {
         return audioPlayer;
+    }
+
+    public Timer getTimer() {
+        return timer;
     }
 }

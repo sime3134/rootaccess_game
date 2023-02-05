@@ -37,8 +37,6 @@ public class GameState extends State {
 
     private UIText timerText;
 
-    private Timer timer;
-
     public GameState(GameController controller, ContentManager content, AudioPlayer audioPlayer, Game game) {
         super(controller, content, audioPlayer);
         this.game = game;
@@ -47,14 +45,13 @@ public class GameState extends State {
         personaList = new ArrayList<>();
         thereIsNewData = false;
         listId = -1;
-        timer = new Timer();
         prepareContainers();
     }
 
 
     @Override
     public void update(Game game) {
-        timerText.setText(timer.getSecondsLeft());
+        timerText.setText(Timer.getSecondsLeft());
 
         for (UITextContainer container : textContainers) {
             container.update();
@@ -113,6 +110,7 @@ public class GameState extends State {
                 this.progressLevel();
             }else{
                 audioPlayer.playSound("Wrong_Answer.wav", 0);
+                Timer.reduceSeconds(5);
                 game.getConnection().sendIncorrect();
             }
         }

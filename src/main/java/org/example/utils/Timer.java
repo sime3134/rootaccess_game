@@ -1,14 +1,14 @@
 package org.example.utils;
 
 public class Timer {
-    long startTime;
-    final int levelTime = 40;
+    static long startTime;
+    final static int levelTime = 40;
 
     public Timer() {
         this.startTime = System.currentTimeMillis();
     }
 
-    public int getSecondsSinceStart() {
+    public static int getSecondsSinceStart() {
         return (int) (System.currentTimeMillis() - startTime) / 1000;
     }
 
@@ -16,11 +16,15 @@ public class Timer {
         startTime = System.currentTimeMillis();
     }
 
-    public int getSecondsLeft() {
+    public static int getSecondsLeft() {
         return levelTime - getSecondsSinceStart();
     }
 
-    public void reduceSeconds(int timeToReduce) {
-        startTime += timeToReduce*1000;
+    public static void setSecondsLeft(int seconds) {
+        startTime = System.currentTimeMillis() - (levelTime - seconds)*1000;
+    }
+
+    public static void reduceSeconds(int timeToReduce) {
+        startTime -= timeToReduce*1000;
     }
 }

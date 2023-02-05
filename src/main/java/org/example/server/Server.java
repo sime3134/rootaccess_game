@@ -139,7 +139,17 @@ public class Server {
                     friendOos.flush();
                 }
                 case "INCORRECT" -> {
+                    Object temp = null;
+                    int time = 0;
+                    try {
+                        temp= ois.readObject();
+                        time = (int) temp;
+                    } catch (ClassNotFoundException e) {
+                        throw new RuntimeException(e);
+                    }
                     friendOos.writeUTF("FRIENDINCORRECT");
+                    friendOos.flush();
+                    friendOos.writeInt(time);
                     friendOos.flush();
                 }
                 default -> System.out.println("Server: " + "Received unknown request: " + request);
