@@ -110,7 +110,7 @@ public class GameState extends State {
                 this.progressLevel();
             }else{
                 audioPlayer.playSound("Wrong_Answer.wav", 0);
-                Timer.reduceSeconds(5);
+                Timer.reduceSeconds(10);
                 game.getConnection().sendIncorrect();
             }
         }
