@@ -14,8 +14,7 @@ public class Launcher {
         content.loadContent();
         String ipAddress = null;
         int result = JOptionPane.showConfirmDialog(null,"Welcome! This is a two player game played on a local " +
-                        "network. One of the players need to start a server, is that you?", "Server or " +
-                        "Client?",
+                        "network. One of the players need to start a server, is that you?", "root access v0.1",
                 JOptionPane.YES_NO_OPTION,
                 JOptionPane.QUESTION_MESSAGE);
         if(result == JOptionPane.YES_OPTION){

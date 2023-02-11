@@ -80,7 +80,7 @@ public class Game {
             }
             case "gameover" -> {
                 currentState = gameOverState;
-                audioPlayer.playSound("Access_denied.wav", 0);
+                audioPlayer.playSound("Access_Denied.wav", 0);
             }
         }
     }

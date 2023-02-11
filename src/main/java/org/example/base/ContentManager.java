@@ -4,10 +4,7 @@ import org.example.utils.ImgUtils;
 import org.apache.commons.io.FilenameUtils;
 
 import java.awt.*;
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
-import java.io.IOException;
+import java.io.*;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -24,17 +21,6 @@ public class ContentManager {
     private Font font;
 
     //region getters and setters (click to view)
-    private String[] getFilesInFolder(String basePath) {
-        URL resource = ContentManager.class.getResource(basePath);
-        File file = new File(resource.getFile());
-        return file.list((current, name) -> new File(current, name).isFile());
-    }
-
-    private String[] getFolderNames(String basePath) {
-        URL resource = ContentManager.class.getResource(basePath);
-        File file = new File(resource.getFile());
-        return file.list((current, name) -> new File(current, name).isDirectory());
-    }
 
     public Image getImage(String name) {
         return images.get(name);
@@ -56,53 +42,66 @@ public class ContentManager {
 
     public void loadContent() {
         loadImages("/images");
-        loadFont("/font/joystix.ttf");
-        loadFont("/font/january.ttf");
+        loadFonts("/font", "joystix.ttf", "january.ttf");
         loadWords("/words/interests", interests);
         loadWords("/words/occupations", occupations);
     }
 
-    private void loadFont(String filePath) {
-        URL resource = ContentManager.class.getResource(filePath);
-        File fontFile = new File(resource.getFile());
-        try {
-            font = Font.createFont(Font.TRUETYPE_FONT, fontFile);
-        } catch (FontFormatException | IOException e) {
-            e.printStackTrace();
-        }
+    private void loadFonts(String filePath, String... fontNames) {
+        for(String fontName : fontNames) {
+            InputStream stream = ContentManager.class.getResourceAsStream(filePath + "/" + fontName);
+            try {
+                font = Font.createFont(Font.TRUETYPE_FONT, stream);
+                stream.close();
+            } catch (FontFormatException | IOException e) {
+                e.printStackTrace();
+            }
 
-        GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
-        ge.registerFont(font);
+            GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
+            ge.registerFont(font);
+        }
     }
 
     private void loadImages(String filePath) {
-        String[] imagesInFolder = getFilesInFolder(filePath);
-
-        for(String fileName : imagesInFolder) {
+        String fileName = "";
+        for(int i = 0; i < 7; i++) {
+            fileName = "portrait" + i + ".png";
             Image originalImage = ImgUtils.loadImage(filePath + "/" + fileName);
             String fileNameWithoutExt = fileName.substring(0, fileName.length() - 4);
             images.put(fileNameWithoutExt + "-1080", originalImage);
             images.put(fileNameWithoutExt + "-720", ImgUtils.scaleDownImage(originalImage, 1.5f));
         }
+        fileName = "bg.png";
+        Image originalImage = ImgUtils.loadImage(filePath + "/" + fileName);
+        String fileNameWithoutExt = fileName.substring(0, fileName.length() - 4);
+        images.put(fileNameWithoutExt + "-1080", originalImage);
+        images.put(fileNameWithoutExt + "-720", ImgUtils.scaleDownImage(originalImage, 1.5f));
     }
 
     private void loadWords(String folderPath, Map<String, ArrayList<String>> wordDict) {
-        String[] txtInFolder = getFilesInFolder(folderPath);
+        String[] txtInFolder = {};
+
+        if(folderPath.contains("interests")) {
+            txtInFolder = new String[]{"Animals.txt", "Art.txt", "Astronomy.txt", "Computers.txt", "Racing.txt",
+                    "Sports.txt", "Sweets.txt"};
+        } else if(folderPath.contains("occupations")) {
+            txtInFolder = new String[]{"Dentist.txt", "Lawyer.txt", "Military.txt", "Scientist.txt"};
+        }
 
         for(String fileName : txtInFolder) {
-            String filePath = ContentManager.class.getResource(folderPath + "/" + fileName).getPath();
-            File file = new File(filePath);
-            String categoryName = FilenameUtils.removeExtension(file.getName());
+            String categoryName =  fileName.substring(0, fileName.length() - 4);
             ArrayList<String> wordList = new ArrayList<String>();
             try {
-                BufferedReader br = new BufferedReader(new FileReader(file));
+                BufferedReader br =
+                        new BufferedReader(new InputStreamReader(ContentManager.class.getResourceAsStream(folderPath + "/" + fileName)));
                 String st;
                 while ((st = br.readLine()) != null) {
                     wordList.add(st);
                 }
                 wordDict.put(categoryName, wordList);
             } catch (IOException except) {
-                System.out.println("Failed to read text file: " + filePath);
+                except.printStackTrace();
+                System.out.println("Failed to read text file: " + fileName);
             }
         }
     }

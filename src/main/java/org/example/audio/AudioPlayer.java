@@ -63,6 +63,7 @@ public class AudioPlayer {
 
     public void playSound(String fileName, long startPoint) {
         final Clip clip = getClip(fileName, startPoint);
+        if(clip == null) return;
         final AudioClip audioClip = new AudioClip(clip, true);
         audioClip.setVolume(Settings.getVolume());
         audioClips.put(fileName, audioClip);
@@ -77,7 +78,7 @@ public class AudioPlayer {
             return clip;
 
         } catch (UnsupportedAudioFileException | IOException | LineUnavailableException e) {
-            System.out.println(e);
+            e.printStackTrace();
         }
 
         return null;

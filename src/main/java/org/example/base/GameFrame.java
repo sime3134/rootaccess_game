@@ -19,7 +19,7 @@ public class GameFrame extends JFrame {
 
     public GameFrame(Game game) {
         this.game = game;
-        setTitle("root access");
+        setTitle("root access v0.1");
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setUndecorated(true);
 
