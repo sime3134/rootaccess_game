@@ -1,11 +1,11 @@
 package org.example.utils;
 
 public class Timer {
-    static long startTime;
+    private static volatile long startTime;
     final static int levelTime = 40;
 
     public Timer() {
-        this.startTime = System.currentTimeMillis();
+        startTime = System.currentTimeMillis();
     }
 
     public static int getSecondsSinceStart() {
