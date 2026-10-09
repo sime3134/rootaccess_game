@@ -45,7 +45,7 @@ public class ServerConnection {
         } catch (IOException e) {
             e.printStackTrace();
             System.out.println("Something went wrong connecting to the server.");
-            System.exit(0);
+            throw new IllegalStateException("Could not connect to game server", e);
         }
 
         requests.put(new Request("LOGIN"));
@@ -109,8 +109,7 @@ public class ServerConnection {
             switch (message) {
                 case "FRIENDCORRECT" -> {
                     game.getAudioPlayer().playSound("Access_Granted.wav", 0);
-                    oos.writeUTF("LOGIN");
-                    oos.flush();
+                    requests.put(new Request("LOGIN"));
                 }
                 case "FRIENDINCORRECT" -> {
                     game.getAudioPlayer().playSound("Wrong_Answer.wav", 0);
