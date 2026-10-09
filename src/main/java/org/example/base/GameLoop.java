@@ -31,12 +31,12 @@ public class GameLoop implements Runnable {
     public void run() {
         double accumulator = 0;
         long currentTime;
-        long lastUpdate = System.currentTimeMillis();
+        long lastUpdate = System.nanoTime();
         nextStatTime = System.currentTimeMillis() + 1000;
 
         while(!Thread.interrupted()) {
             currentTime = System.currentTimeMillis();
-            double lastRenderTimeInSeconds = (currentTime - lastUpdate) / 1000d;
+            double lastRenderTimeInSeconds = Math.min((currentTime - lastUpdate) / 1_000_000_000d, 0.25d);
             accumulator += lastRenderTimeInSeconds;
             lastUpdate = currentTime;
 
@@ -47,6 +47,12 @@ public class GameLoop implements Runnable {
                 }
             }
             draw();
+            try {
+                Thread.sleep(1);
+            } catch (InterruptedException e) {
+                Thread.currentThread().interrupt();
+                break;
+            }
 
             //printStats();
         }

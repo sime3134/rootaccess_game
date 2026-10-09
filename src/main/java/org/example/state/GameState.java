@@ -29,7 +29,7 @@ public class GameState extends State {
     private int currentLevel = 1;
     private float timeMillis;
 
-    private boolean thereIsNewData;
+    private volatile boolean thereIsNewData;
 
     private int listId;
 

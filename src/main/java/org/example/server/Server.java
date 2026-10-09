@@ -35,7 +35,6 @@ public class Server {
     String name;
 
     public Server(ContentManager content){
-        new ConnectionListener(725).start();
         spacing = 6;
         numberOfWords = 40;
         textGen = new TextGenerator(content.getInterests(), content.getOccupations());
@@ -45,6 +44,7 @@ public class Server {
             name = faker.name().fullName();
         }
         portraitName = getRandomPortraitName();
+        new ConnectionListener(725).start();
     }
 
     /**
@@ -72,7 +72,11 @@ public class Server {
                         player1.friendOos = player2.oos;
                         player2.start();
                     }
-                    numberOfConnections++;
+                    if (numberOfConnections >= 2) {
+                        socket.close();
+                    } else {
+                        numberOfConnections++;
+                    }
                 }
             }catch(IOException e){
                 e.printStackTrace();
@@ -115,12 +119,15 @@ public class Server {
         public void run() {
             try {
 
-                while (!Thread.interrupted()) {
+                while (!Thread.currentThread().isInterrupted()) {
                     handleRequests();
                 }
 
             } catch (IOException se) {
-                se.printStackTrace();
+                System.err.println("Player " + id + " disconnected: " + se.getMessage());
+            } finally {
+                try { ois.close(); } catch (IOException ignored) { }
+                try { oos.close(); } catch (IOException ignored) { }
             }
         }
 
