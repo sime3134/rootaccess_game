@@ -62,7 +62,7 @@ public class TextGenerator {
         for (String categoryName : interests.keySet()) {
             ArrayList<String> wrongOrCorrectWordList = possibleWrongWords;
             for (UIText uiText : interestsText) {
-                if (uiText.getText() == categoryName) {wrongOrCorrectWordList = possibleCorrectWords;}
+                if (uiText.getText().equals(categoryName)) {wrongOrCorrectWordList = possibleCorrectWords;}
             }
             for (String word : interests.get(categoryName)) {
                 wrongOrCorrectWordList.add(word);
@@ -112,7 +112,7 @@ public class TextGenerator {
         screenText1.add(addIndex1 + 1, new UIText(createFillerString(spacing), WordType.FILLER, fontSize));
         int addIndex2 = rand.nextInt(screenText2.size() / 2) * 2;
         screenText2.add(addIndex2, new UIText(correctWord.substring(splitIndex), WordType.CORRECT, fontSize));
-        screenText2.add(addIndex1 + 1, new UIText(createFillerString(spacing), WordType.FILLER, fontSize));
+        screenText2.add(addIndex2 + 1, new UIText(createFillerString(spacing), WordType.FILLER, fontSize));
     }
 
     private String createFillerString(int len) {
